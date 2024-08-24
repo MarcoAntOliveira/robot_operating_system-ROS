@@ -1,0 +1,4 @@
+<launch>
+    <include file="$(find nome_project)/launch/counter_cpp.launch"/>
+    <node name="num_pub_cpp" pkg="nome_project" type="number" output="screen"/>
+</launch>

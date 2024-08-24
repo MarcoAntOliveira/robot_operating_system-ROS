@@ -1,0 +1,8 @@
+prefix=/home/marcos/projects/ROS/curso/catkin_ws/install
+
+Name: my_project_bringup
+Description: Description of my_project_bringup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

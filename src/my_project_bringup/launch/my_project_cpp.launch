@@ -1,0 +1,23 @@
+<launch>
+    <!-- Definição de um argumento para incluir um novo contador -->
+    <arg name="new_counter" default="True"/>
+    
+    <!-- Inclusão do arquivo de lançamento de counter_cpp -->
+    <include file="$(find my_project_bringup)/launch/counter_cpp.launch">
+        <arg name="number_topic" value="new_number"/>
+    </include>
+    
+    <!-- Nó que publica números -->
+    <node name="num_pub_cpp" pkg="my_project_cpp" type="number_publisher" output="screen"/>
+    
+    <!-- Inclusão condicional de outro nó baseado no valor do argumento new_counter -->
+    <group if="$(arg new_counter)">
+        <node name="num_pub_cpp_2" pkg="my_project_cpp" type="number_publisher" output="screen"/>
+    </group>
+    
+    <!-- Definição de parâmetros -->
+    <param name="count_cpp" type="double" value="1"/>
+    <param name="interval" type="double" value="7"/>
+    <param name="num" type="double" value="6"/>
+    <param name="reset" type="double" value="2"/>   
+</launch>
