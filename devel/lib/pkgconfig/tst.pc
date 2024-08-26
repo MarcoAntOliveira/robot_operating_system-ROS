@@ -1,8 +1,0 @@
-prefix=/home/marcos/projects/ROS/curso/catkin_ws/devel
-
-Name: tst
-Description: Description of tst
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

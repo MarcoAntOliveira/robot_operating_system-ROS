@@ -1,8 +1,0 @@
-prefix=/home/marcos/projects/ROS/curso/catkin_ws/install
-
-Name: my_project_py
-Description: Description of my_project_py
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -1,8 +1,0 @@
-prefix=/home/marcos/projects/ROS/curso/catkin_ws/install
-
-Name: nome_project
-Description: Description of nome_project
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

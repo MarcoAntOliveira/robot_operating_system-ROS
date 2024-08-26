@@ -1,0 +1,2815 @@
+\documentclass[letterpaper]{article}
+\usepackage[legalpaper, left=1 cm, right=1cm, top=0.5cm, bottom=0.5cm] {geometry}
+\date{} % Remove a exibição da data
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{hyperref} % Para criar links
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.533,0.176,0.376}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{new_blue}{rgb}{0, 0.7, 2}
+\definecolor{new_red}{rgb}{0.70, 0.047, 0}
+\definecolor{new_pink}{rgb}{2.55, 0 , 2.03}
+
+
+\lstdefinestyle{bashStyle}{
+    language=bash, % Use 'HTML' para a linguagem HTML
+    basicstyle=\ttfamily\small\color{codepurple},
+    keywordstyle=\color{blue},
+    stringstyle=\color{new_red},
+    commentstyle=\color{blue}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{orange},
+    breaklines=true,
+    showstringspaces=false,
+    frame = shadowbox,
+}
+
+\lstdefinestyle{pythonStyle}{
+    language=Python,
+    basicstyle=\ttfamily\small\color{new_red},
+    keywordstyle=\color{blue},
+    stringstyle=\color{orange},
+    commentstyle=\color{orange}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{blue},
+    breaklines=true,
+    showstringspaces=false,
+    frame = shadowbox,
+}
+
+\lstdefinestyle{cppStyle}{
+    language=C++,
+    basicstyle=\ttfamily\small\color{new_blue},
+    keywordstyle=\color{blue},
+    stringstyle=\color{new_red},
+    commentstyle=\color{new_pink}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{blue},
+    breaklines=true,
+    showstringspaces=false,
+    frame = shadowbox,
+}
+\lstdefinestyle{xmlStyle}{
+    language=XML,
+    basicstyle=\ttfamily\small\color{new_pink},
+    keywordstyle=\color{blue},
+    stringstyle=\color{new_red},
+    commentstyle=\color{new_pink}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{blue},
+    breaklines=true,
+    showstringspaces=false,
+    frame = shadowbox,
+}
+
+\lstdefinestyle{mystyle}{
+    language=	bash, % Use 'HTML' para a linguagem HTML
+    basicstyle=\ttfamily\small\color{codegreen},
+    keywordstyle=\color{blue},
+    stringstyle=\color{codepurple},
+    commentstyle=\color{new_red}\itshape,
+    numbers=left,
+    numberstyle=\tiny\color{codegray},
+    breaklines=true,
+    showstringspaces=false,
+     frame = shadowbox,
+}
+
+
+\lstset{style=mystyle}
+
+\title{\textbf{ROS}}
+\begin{document}
+\maketitle
+\tableofcontents
+\newpage
+\section{Introduçao}
+
+\subsection{Elementos Básicos}
+\begin{itemize}
+    \item Nós (nodes): executaveis, processos, códigos que realizam alguma atividade, não necessariamente no mesmo sistema
+    \item Tópicos (topics): forma de troca de informações entre os Nós
+    \item Serviços (services): interação entre nós de forma a solicitar uma ação ou um dado como resposta
+    \item Pacotes (packages): forma de organização dos arquivos e codigos no Ros.favorece a modularidade das aplicações do sistema.
+\end{itemize}
+
+\subsection{Links uteis}
+Instalação completa framework 
+\href{https://emanual.robotis.com/docs/en/platform/turtlebot3/quick-start/#pc-setup}{site-passo-a-passo}
+\href{https://youtu.be/cMuhUsItOtQ?si=160sPFJVYM5XW0wg--}{site-video}
+
+Documentacao acerca do framework  
+\href{https://wiki.ros.org/}{wiki ros}\\
+
+Documentacao do que já foi feito no ROS
+\href{https://wiki.ros.org/Tutorials/}{Tutorais ros} \\
+
+Forum para tirar duvidas.
+\href{https://answers.ros.org/}{ROS Answer}\\
+
+discursões e divulgações do que será feito  
+\href{https://discourse.ros.org/}{Discourse ROS}\\
+\section{Instalação}
+
+\subsection{Passos da Instalação}
+\href{https://www.youtube.com/watch?v=FFDhLPgNftE&t=347s}{video de instalação}\\
+\href{https://wiki.ros.org/noetic/Installation/Ubuntu}{link para os passos na wiki ROS}
+
+\section{Primeiro projeto}
+Antes de criar um novo pacote, é importante garantir que o ambiente ROS esteja devidamente configurado. Isso é feito utilizando o comando source para carregar as variáveis de ambiente do ROS.\\
+Utilize o comando \$catkin\_create\_pkg\$ para criar um novo pacote. O comando abaixo cria um pacote chamado \$nome\_project\$ com dependências nas bibliotecas roscpp, rospy e \$std\_msgs:\$
+
+
+
+\begin{lstlisting}[style=bashStyle, title=Comandos no terminal bash linux]
+
+    source devel/setup.bash // sempre manter atualizado
+    catkin_create_pkg nome_project roscpp rospy std_msgs /criando um package
+    roscpp <diretorio_destino>
+    
+\end{lstlisting}
+
+\begin{itemize}
+    \item CMakeLists.txt
+    \item package.xml
+    \item include/
+    \item $nome\_project/$
+    \item src/, msg/
+\end{itemize}
+\section{Nós e topicos}
+	 Podem ser instaciados multiplas vezes
+\section{primeiro Nó}
+    \begin{lstlisting}[style=cppStyle, title= talker\_cpp.cpp ] 
+        catkinmake  
+        rostopic list
+        rostopic echo /chatter
+        
+        O codigo esta usando o publisher rostopic echo /chatter
+        esse comando mostra o que esta acontecendo dentro do publisher
+        
+        rostopic hz /chatter // mostra a frequencia de amostragem
+        
+        rostopic info /chatter quem ta publicando e quem ta escrito no no    
+    \end{lstlisting}
+    
+    \begin{lstlisting}[style=cppStyle, title= talker\_cpp.cpp ] 
+        #include "ros/ros.h"
+        #include "std_msgs/String.h"
+        
+        
+        int main (int args, char **argv){
+            ros::init(args, argv, "talker_cpp");
+        
+            ros::NodeHandle nh;
+        
+            ros::Rate loop_rate(10);
+        
+            ros:: Publisher chatter_pub = nh.advertise<std_msgs::String>("chatter", 1000);
+        
+            int count = 0;
+            while(ros:: ok()){
+                std::string txt = "Ola ross! contagem:" + std::to_string(count);
+        
+                ROS_INFO("%s", txt.c_str());
+        
+                std_msgs::String msg;
+                msg.data = txt;
+                chatter_pub.publish(msg);
+        
+                //fazer algo
+                ros::spinOnce();
+                loop_rate.sleep();
+                ++count;
+            }
+        
+            return 0;
+        }
+        
+    \end{lstlisting}
+    \subsection{codigo detalhado}
+        \begin{lstlisting}[style=cppStyle, title= headers ] 
+            #include "ros/ros.h"
+            #include "std_msgs/String.h"
+        \end{lstlisting}
+    
+        \textcolor{blue}{$ros/ros.h:$} Inclui as funcionalidades basicas do ROS, como a inicializacao, criação de nos, e controle de taxa.\\
+        \textcolor{blue}{$std\_msgs/String.h$}: Inclui a definição da mensagem do tipo String, que é usada para enviar textos.
+        
+        \begin{lstlisting}[style=cppStyle, title= Função main] 
+            int main (int args, char **argv){
+            ros::init(args, argv, "talker_cpp");
+        \end{lstlisting}
+        ros::init(args, argv, "talker\_cpp");: Inicializa o nó ROS com o nome "talker\_cpp".
+        
+        \begin{lstlisting}[style=cppStyle, title= Criação de um NodeHandle] 
+            ros::NodeHandle nh;
+        \end{lstlisting}
+         Cria um manipulador de nó, responsável por interagir com o sistema ROS (criando tópicos, assinantes, etc.).
+        \begin{lstlisting}[style=cppStyle, title= Definição da Taxa de Loop] 
+            ros::Rate loop_rate(10);
+        \end{lstlisting}
+        ros::Rate loop\_rate(10);: Define a taxa de repetição do loop para 10 Hz.
+        
+        \begin{lstlisting}[style=cppStyle, title= Criando o Publicador] 
+            ros::Publisher chatter_pub = nh.advertise<std_msgs::String>("chatter", 1000);
+        \end{lstlisting}
+         Cria um publicador no tópico chatter para mensagens do tipo std\_msgs::String. O segundo argumento (1000) é o tamanho da fila de mensagens.
+    \subsection{explicação terminal}
+    
+        No exemplo feito em aula, ele rodava quatro terminais ao mesmo tempo, um com o roscore, rosrun my\_first\_pkg/
+        
+        \textbf{ele não acha as bibliotecas do ros e a biblioteca standart mensage , porém o projeto funciona perfeitamente}
+        
+        \textbf{cmakelists.txt}\\
+        \textbf{Defina o executável talker\_cpp e seu arquivo fonte}
+        \begin{lstlisting}[style=bashStyle, title=cmakeLists.txt] 
+            
+            add_executable(talker_cpp src/talker_cpp.cpp)}\\
+            
+            # Vincule as bibliotecas necessarias ao executavel\\
+            target_link_libraries(talker_cpp \${catkin_LIBRARIES})\\
+            
+        \end{lstlisting}
+
+\section{Nó em python}
+
+    o Primeiro comando é importante pois ele seta o compilador que vai ser usado
+    \begin{lstlisting}[style=pythonStyle, title= base de um nó em python]
+         #!/usr/bin/env python3
+        
+        import rospy
+        
+        
+        def talker():
+            rospy.init_node("talker_python")
+        
+            loop_rate = rospy.Rate(10)
+            while not rospy.is_shotdown():
+                loop_rate.sleep()
+        
+        
+        if __name__ =="__main__":
+            try:
+                talker()
+            except rospy.ROSInterruptException:
+                pass    
+    \end{lstlisting}
+    \subsection{detalhameento do código}
+        \begin{itemize}
+            
+            \begin{lstlisting}[style=pythonStyle, title= Codigo]
+              #!/usr/bin/env python3
+            \end{lstlisting}
+            
+            \item Shebang $(\#\!)$: Informa ao sistema operacional que este script deve ser executado usando o interpretador Python 3. O caminho (/usr/bin/env python3) localiza automaticamente o Python 3 no sistema, garantindo que o script seja executado corretamente, independentemente da localizacao do Python 3.
+    
+            \begin{lstlisting}[style=pythonStyle, title= importacao]
+              import rospy
+            \end{lstlisting}
+            
+            \item Importação do módulo rospy: O módulo rospy é a biblioteca ROS para Python, que permite criar nós ROS, publicar/subscrever em tópicos, usar serviços, etc.
+            
+            
+            \begin{lstlisting}[style=pythonStyle, title= Função talker]
+                def talker():
+                rospy.init_node("talker_python")
+            \end{lstlisting}
+            \item Define uma função chamada talker.
+            
+            \item rospy.init\_node("talker\_python"): Inicializa um nó ROS chamado "talker\_python". Todo nó ROS precisa de um nome exclusivo, e esta linha registra o nó no mestre ROS.
+            
+            \begin{lstlisting}[style=pythonStyle, title= loop principal]
+                 loop_rate = rospy.Rate(10) 
+            \end{lstlisting}
+            
+            \item rospy.Rate(10): Define uma taxa de loop de 10 Hz, ou seja, o loop rodará 10 vezes por segundo. Essa função é usada para controlar a frequência de execução do loop principal.
+            
+            \begin{lstlisting}[style=pythonStyle, title= base de um nó em python]
+                while not rospy.is_shutdown():
+                loop_rate.sleep() 
+            \end{lstlisting}
+            \item Loop while: Este loop while continuará rodando até que o ROS seja desligado (por exemplo, ao pressionar Ctrl+C).
+            \item rospy.is\_shutdown(): Verifica se o ROS foi desligado.
+            \item loop\_rate.sleep(): Faz o loop dormir o tempo necessário para manter a frequência definida bem rospy.Rate(10). Neste caso, ele dorme por 0,1 segundos para manter a taxa de 10 Hz.
+             \begin{lstlisting}[style=pythonStyle, title= diretiva main]
+                if __name__ == "__main__":
+                try:
+                    talker()
+                except rospy.ROSInterruptException:
+                    pass
+            \end{lstlisting}
+            \item if \_\_name\_\_ == "\_\_main\_\_":: Este bloco verifica se o script está sendo executado diretamente (não importado como um módulo). Se for o caso, ele executa a função talker.
+            \item try-except: O bloco try tenta executar a função talker(). Se uma excecao rospy.ROSInterruptException for lançada (geralmente ocorre quando o ROS e interrompido), o bloco except captura essa excecao e ignora-a (o código dentro de pass não faz nada).
+            
+        \end{itemize}
+    
+    
+\section{ROS Publisher e Subscriber em C++ - ParteI}
+    \begin{lstlisting}[style=bashStyle, title=terminal ROS] 
+        rostopic -h
+        rostopic hz <nome_topico> mostra a publicacao do topico com a frequencia estabelecida no codigo
+        rosnode list lista os nos disponiveis
+        rostpic list // deve mostrar os topicos em execucao
+        rostopic pub /number std_msgs/Float64 "data: 4.0" 
+        rostopic pub /number std_msgs/Float64 "data: 4.0 " -r 2 // iteracao sobre o comando na                taxa de 2 hz.
+         rostopic -h //lista de comandos associados ao rostopic
+         rostopic info <nome_topico>
+        envia informacoes para o topico en execucao
+    \end{lstlisting}
+    
+    \begin{lstlisting}[style=cppStyle, title= counter.cpp ] 
+        #include <iostream>
+        #include "ros/ros.h"
+        #include"std_msgs/Float64.h"
+        class Counter{
+            public:
+                Counter(ros::NodeHandle *nh){
+                    count = 0;
+        
+                    num_sub = nh ->subscribe("/number", 10, &Counter::numberCallBack, this);
+                }
+                void numberCallBack(const std_msgs::Float64 &msg){
+                    count = count + msg.data;
+                    ROS_INFO("CONTAGEM ATUAL:%f", count); 
+                }
+            private:
+                double count;
+                ros::Subscriber num_sub;
+        };
+        
+        int main(int argc, char **argv){
+            ros::init(argc, argv, "counter_node");
+            ros:: NodeHandle nh;
+            Counter counter = Counter( &nh);
+            ros::spin();    
+        
+            return 0;    
+    \end{lstlisting}
+    \subsection{detalhamento counter.cpp}
+        \begin{itemize}
+            \item \#include "ros/ros.h": Inclui a biblioteca principal do ROS, que fornece as funcionalidades necessárias para criar nós, publicar e subscrever tópicos, etc.
+            \item \#include "std\_msgs/Float64.h": Inclui a definição do tipo de mensagem std\_msgs::Float64, que é usada para enviar dados do tipo double em ROS.
+            \begin{lstlisting}[style=cppStyle, title= declaração da classe counter ]
+            class Counter {
+                public:
+                    Counter(ros::NodeHandle *nh) {
+                        count = 0;
+                        num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+                    }
+            
+                    void numberCallBack(const std_msgs::Float64 &msg) {
+                        count = count + msg.data;
+                        ROS_INFO("CONTAGEM ATUAL: %f", count);
+                    }
+            
+                private:
+                    double count;
+                    ros::Subscriber num_sub;
+            };
+        
+            \end{lstlisting}
+            \item Classe Counter: Define uma classe que gerencia a contagem dos valores recebidos e armazena o estado necessário.
+            \item Construtor Counter(ros::NodeHandle *nh):
+            \begin{itemize}
+                \item Este é o construtor da classe, que é chamado quando uma instância da classe Counter é criada.
+                \item count = 0;: Inicializa a variável count com 0
+                \item num\_sub = nh\-\>subscribe("/number", 10, \&Counter::numberCallBack, this);:
+                \item Cria um subscritor (Subscriber) que se inscreve no tópico /number.
+                \item 10: O segundo argumento é o tamanho da fila de mensagens.
+                \item \&Counter::numberCallBack: Especifica o método que será chamado quando uma nova mensagem for recebida (callback).
+                \item  this: Passa um ponteiro para a instância atual da classe Counter para o método de callback.
+            \end{itemize}
+            \item Método numberCallBack
+            \begin{itemize}
+                \item void numberCallBack(const std\_msgs::Float64 \&msg): Método que será chamado sempre que uma nova mensagem for recebida no tópico /number.
+                \item count = count + msg.data;: Atualiza a variável count somando o valor recebido (msg.data).
+                \item OS\_INFO("CONTAGEM ATUAL: \%f", count);: Imprime a contagem atual no terminal, formatando o número com %f para um valor de ponto flutuante.
+            \end{itemize}  
+            \begin{lstlisting}[style=cppStyle, title= Função main ]
+                 int main(int argc, char **argv) {
+                ros::init(argc, argv, "counter_node");
+                ros::NodeHandle nh;
+                Counter counter = Counter(&nh);
+                ros::spin();
+                return 0;
+                }
+            \end{lstlisting}
+            \item int main(int argc, char **argv): A função principal que inicia o programa.
+            \item ros::init(argc, argv, "counter\_node");: Inicializa o nó ROS com o nome "counter\_node".
+            \item ros::NodeHandle nh;: Cria um objeto NodeHandle, que é necessário para interagir com o sistema ROS.
+            \item Counter counter = Counter(\&nh);: Cria uma instância da classe Counter, passando o NodeHandle para que o subscritor possa ser criado.
+            \item ros::spin();: Entra em um loop que mantém o programa rodando e processando callbacks até que o ROS seja desligado.
+            \item return 0;: Retorna 0 ao final da execução do programa, indicando que o programa terminou com sucesso.
+            
+        \end{itemize}
+    \subsection{definindo um timer no counter.cpp}
+    
+    \begin{lstlisting}[style=cppStyle, title= counter.cpp - publicando ]
+    #include <iostream>
+    #include "ros/ros.h"
+    #include"std_msgs/Float64.h"
+    
+    class Counter{
+        public:
+            Counter(ros::NodeHandle *nh){
+                count = 0;
+                publish_interval = 1;
+    
+                num_sub = nh ->subscribe("/number", 10, &Counter::numberCallBack, this);
+                count_pub = nh -> advertise < std_msgs::Float64>("/current_count", 10);
+                timer_pub = nh -> createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+    
+            }
+            void numberCallBack(const std_msgs::Float64 &msg){
+                count = count + msg.data;
+                ROS_INFO("CONTAGEM ATUAL:%f", count); 
+    
+    
+            }
+    
+            void timerCallback(const ros::TimerEvent &event){
+                std_msgs ::Float64 msg;
+                msg.data = count;
+                count_pub.publish(msg); 
+    
+            }
+    
+    
+        private:
+            double count;
+            double publish_interval;
+            ros::Subscriber num_sub;
+            ros:: Publisher count_pub;
+            ros:: Timer timer_pub;
+    };
+    
+    int main(int argc, char **argv){
+        ros::init(argc, argv, "counter_node");
+        ros:: NodeHandle nh;
+        Counter counter = Counter( &nh);
+        ros::spin();
+    
+        return 0;
+    
+    } 
+    \end{lstlisting}
+    \subsubsection{detalhamento do timercallback}
+    \begin{itemize}
+        \item publish\_interval: Essa variável foi adicionada à classe Counter e é usada para definir o intervalo de tempo (em segundos) entre cada publicação da contagem atualizada. No construtor, ela é inicializada com o valor 1, o que significa que a contagem será publicada a cada segundo.
+        
+        \begin{lstlisting}[style=cppStyle, title= Criação do Publisher count\_pub ]
+            count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10)    
+        \end{lstlisting}
+        
+        \item count\_pub: Este é um publisher que foi adicionado à classe Counter. Ele publica mensagens do tipo std\_msgs::Float64 no tópico /current\_count.
+        
+        \item /current\_count: Esse é o novo tópico onde a contagem atualizada será publicada. Outros nós podem se inscrever nesse tópico para receber as contagens.
+        
+        \item 10: Tamanho da fila de mensagens, semelhante ao subscritor.
+        
+         \begin{lstlisting}[style=cppStyle, title= Criação do Publisher count\_pub ]
+            timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+        \end{lstlisting}
+        
+        \item timer\_pub: Um temporizador foi adicionado à classe Counter. Esse temporizador é criado com um intervalo definido por publish\_interval (inicialmente 1 segundo) e chama o método timerCallback a cada intervalo.
+        
+        \item ros::Duration(publish\_interval): Define o intervalo do temporizador com base na duração especificada em publish\_interval.
+         \begin{lstlisting}[style=cppStyle, title= Criação do Publisher count\_pub ]
+            void timerCallback(const ros::TimerEvent &event) {
+                std_msgs::Float64 msg;
+                msg.data = count;
+                count_pub.publish(msg);
+            }
+        \end{lstlisting}
+        \item timerCallback: Este método é chamado automaticamente a cada intervalo de tempo definido pelo temporizador.
+        \item msg.data = count;: Cria uma mensagem do tipo std\_msgs::Float64 e define seu valor como o valor atual de count.
+        \item ount\_pub.publish(msg);: Publica a mensagem no tópico /current\_count.
+
+        
+    \end{itemize}
+    
+    
+\section{Publisher e subcriber em c++ partII}
+\begin{lstlisting}[style=cppStyle, title=$number\_publish.cpp$] 
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+
+class NumberPublisher{
+    public:
+        NumberPublisher(ros::NodeHandle *nh){
+            number = 1.2;
+            publish_interval = 1;
+
+            num_pub = nh->advertise <std_msgs::Float64>("/number", 10);
+            timer_pub = nh -> createTimer (ros::Duration(publish_interval), &NumberPublisher::timerCallback, this);
+        }
+
+        void timerCallback(const ros:: TimerEvent &event){
+            std_msgs::Float64 msg;
+            msg.data = number;
+            num_pub.publish(msg);
+        }
+
+    private:
+        double number;
+        double publish_interval;
+        ros::Publisher num_pub;
+        ros::Timer timer_pub;
+};
+
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "number_publisher");
+    ros::NodeHandle nh;
+    NumberPublisher num_publisher = NumberPublisher(&nh);
+
+    ros::spin();
+    return 0;
+
+}
+
+\end{lstlisting}
+\lstinputlisting[title=minimal\_node\_cpp]{minimal_cpp_node_class.cpp}
+
+\section{Publisher e subcriber em python part I}
+\begin{lstlisting}[style=pythonStyle, title= counter.py ] 
+#!/usr/bin/python3
+import rospy
+
+from std_msgs.msg import Float64
+
+class Counter:
+    def __init__(self) -> None:
+        self.count  = 0
+        self.num_sub = rospy.Subscriber("/number", Float64, self.numberCallback, queue_size = 10)
+
+
+    def numberCallback(self, msg):
+        self.count = self.count + msg.data
+        rospy.loginfo("contagem atual" + str(self.count))
+
+
+if __name__ == "__main__":
+    try:
+        rospy.init_node("counter_node")
+        Counter()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass    
+\end{lstlisting}
+\begin{lstlisting}[style=bashstyle, title=Ros terminal]
+permissao .py
+chmod +x <codigo_py>.py
+rostopic pub -r 1 /number std_msgs/Float64 "2.0" 
+roscore //comunicacao com o master
+\end{lstlisting}
+\begin{lstlisting}[style=pythonstyle, title=counter.py- with publish] 
+#!/usr/bin/python3
+import rospy
+
+from std_msgs.msg import Float64
+
+class Counter:
+    def __init__(self) -> None:
+        self.count  = 0
+        self.publish_interval = 3
+        self.num_sub = rospy.Subscriber("/number", Float64, self.numberCallback, queue_size = 10)
+        self.count_pub = rospy.Publisher("Current_count", Float64, queue_size= 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(), self.TimerCallback)
+
+    def numberCallback(self, msg):
+        self.count = self.count + msg.data
+        rospy.loginfo("contagem atual" + str(self.count))
+    def TimerCallback(self, event):
+        msg = Float64()
+        msg.data = self.count
+        self.count_pub.publish(msg)
+if __name__ == "__main__":
+    try:
+        rospy.init_node("counter_node")
+        Counter()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass    
+\end{lstlisting}
+
+\section{publish e subscriber em python partII}
+\begin{lstlisting}[style=pythonStyle, title=number\_publish.py]
+#!/usr/bin/env python3
+
+import rospy
+from std_msgs.msg import Float64
+
+class NumberPublisher:         	            # Mudar
+
+    def __init__(self):
+        self.number = 3.1
+        self.publish_interval = 1.5
+
+        self.num_pub = rospy.Publisher("/number", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.number
+        self.num_pub.publish(msg)
+        
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("number_publisher_node")	        # Mudar
+        NumberPublisher()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+
+\end{lstlisting}
+\lstinputlisting[title=minimal\_pyhton\_node]{minimal_python_node_class.py}
+\section{ROSService server com  c++}
+
+\begin{lstlisting}[style=cppStyle, title=counter.cpp] 
+#include <iostream>
+#include "ros/ros.h"
+#include"std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class Counter{
+    public:
+        Counter(ros::NodeHandle *nh){
+            count = 0;
+            publish_interval = 1;
+
+            num_sub = nh ->subscribe("/number", 10, &Counter::numberCallBack, this);
+            count_pub = nh -> advertise < std_msgs::Float64>("/current_count", 10);
+            timer_pub = nh -> createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+            reset_srv = nh -> advertiseService ("/reset_counter",  &Counter::resetServerCallback, this);
+
+        }
+        // callback do subscribe
+        void numberCallBack(const std_msgs::Float64 &msg){
+            count = count + msg.data;
+            ROS_INFO("CONTAGEM ATUAL:%f", count); 
+
+
+        }
+        //callback do publish
+        // tempo do ros e nao do computador
+        void timerCallback(const ros::TimerEvent &event){
+            std_msgs ::Float64 msg;
+            msg.data = count;
+            count_pub.publish(msg); 
+
+        }
+        bool resetServerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response  &res){
+            count = 0;
+            ROS_INFO("resetando a contagem");
+            return true;
+        }
+
+
+    private:
+        double count;
+        double publish_interval;
+        ros::Subscriber num_sub;
+        ros:: Publisher count_pub;
+        ros:: Timer timer_pub;
+        ros::ServiceServer reset_srv;
+};
+
+int main(int argc, char **argv){
+    ros::init(argc, argv, "counter_node");
+    ros:: NodeHandle nh;
+    Counter counter = Counter( &nh);
+    ros::spin();
+
+    return 0;
+
+}
+
+
+\end{lstlisting}
+
+\begin{lstlisting}[style=cppStyle, title=number\_publisher.cpp] 
+#include "ros/ros.h"
+
+#include "std_msgs/Float64.h" 
+
+class NumberPublisher{                             
+
+    public:
+        NumberPublisher(ros::NodeHandle *nh){      
+            number = 1.2;
+            publish_interval = 1;
+
+            num_pub = nh->advertise<std_msgs::Float64>("/number", 10);
+            timer_pub = nh->createTimer(ros::Duration(publish_interval), &NumberPublisher::timerCallback, this);
+
+        }
+
+        void timerCallback(const ros::TimerEvent &event){
+            std_msgs::Float64 msg;
+            msg.data = number;
+            num_pub.publish(msg);
+        }
+
+    private:
+        double number;
+        double publish_interval;
+        ros::Publisher num_pub;
+        ros::Timer timer_pub;
+
+};
+
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "number_publisher");     
+    ros::NodeHandle nh;
+    NumberPublisher num_publisher = NumberPublisher(&nh);     
+    
+    ros::spin();
+    return 0;
+}
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[style=bashStyle, title=ROSservice terminal] 
+rosservice call /reset_counter "{}" 
+rosservice list
+rosservice info <nome_service>
+
+\end{lstlisting}
+
+\section{ROS service client em c++}
+
+
+\begin{lstlisting}[style=cppStyle, title=number\_publisher.cpp] 
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class NumberPublisher{
+    public:
+        NumberPublisher(ros::NodeHandle *nh){
+            number = 1.2;
+            publish_interval = 1;
+            reset_interval = 7;
+
+            num_pub = nh->advertise <std_msgs::Float64>("/number", 10);
+            timer_pub = nh -> createTimer (ros::Duration(publish_interval), &NumberPublisher::timerCallback, this);
+            timer_reset = nh->createTimer(ros::Duration(reset_interval), &NumberPublisher::timeResetCallback, this);
+            client_reset = nh -> serviceClient<std_srvs::Empty>("reset_counter");
+        }
+
+
+           void timerCallback(const ros:: TimerEvent &event){
+            std_msgs::Float64 msg;
+            msg.data = number;
+            num_pub.publish(msg);
+        }
+
+        void timeResetCallback(const ros:: TimerEvent &event){
+            std_srvs:: Empty srv;
+            ROS_INFO("solicitacao de reset da contagem");
+            client_reset.call(srv);
+
+        }
+    private:
+        double number;
+        double publish_interval;
+        double reset_interval;
+        ros::Publisher num_pub;
+        ros::Timer timer_pub;
+        ros::ServiceClient client_reset;    
+        ros::Timer timer_reset;
+
+};
+
+
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "number_publisher");
+    ros::NodeHandle nh;
+    NumberPublisher num_publisher = NumberPublisher(&nh);
+
+    ros::spin();
+    return 0;
+
+}
+\end{lstlisting}
+
+\begin{lstlisting}[style=bashStyle, title=] 
+roscore
+rosrun my_project_cpp counter
+rostopic echo /current_count
+rosrun my_project_cp
+rosrun my_project_cpp number_publisher
+\end{lstlisting}
+\section{ROS  service server em python}
+\begin{lstlisting}[style=pythonStyle, title=counter.py] 
+#!/usr/bin/python3
+import rospy
+
+from std_msgs.msg import Float64
+from std_srvs.srv import Empty, EmptyResponse
+
+class Counter:
+    def __init__(self) -> None:
+        self.count  = 0
+        self.publish_interval = 3
+        self.num_sub = rospy.Subscriber("/number", Float64, self.numberCallback, queue_size = 10)
+        self.count_pub = rospy.Publisher("/current_count", Float64, queue_size= 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(), self.TimerCallback)
+        self.reset_srv =rospy.Service("/reset_counter", Empty, self.resetSrvCallback)
+
+    def numberCallback(self, msg):
+        self.count = self.count + msg.data
+        rospy.loginfo("contagem atual" + str(self.count))
+
+    def TimerCallback(self, event):
+        msg = Float64()
+        msg.data = self.count
+        self.count_pub.publish(msg)
+
+    def resetSrvCallback(self, req):
+        self.count = 0
+        rospy.loginfo("resetando a contagem")
+        return EmptyResponse()
+        
+if __name__ == "__main__":
+    try:
+        rospy.init_node("counter_node")
+        Counter()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass    
+\end{lstlisting}
+\begin{lstlisting}[style=pythonStyle, title=number\_publish.py] 
+#!/usr/bin/env python3
+
+import rospy
+from std_msgs.msg import Float64
+
+
+class NumberPublisher:         	            # Mudar
+
+    def __init__(self):
+        self.number = 3.1
+        self.publish_interval = 1.5
+    
+
+        self.num_pub = rospy.Publisher("/number", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+        
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.number
+        self.num_pub.publish(msg)
+
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("number_publisher_node")	        # Mudar
+        NumberPublisher()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+
+\end{lstlisting}
+\section{ROS Service Client em Python}
+
+\begin{lstlisting}[style=pythonStyle, title=number\_publish.py] 
+#!/usr/bin/env python3
+
+import rospy
+from std_msgs.msg import Float64
+from std_srvs.srv import Empty
+
+class NumberPublisher:         	            # Mudar
+
+    def __init__(self):
+        self.number = 3.1
+        self.publish_interval = 1.5
+        self.reset_interval = 8
+
+        self.num_pub = rospy.Publisher("/number", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+        self.client_reset =rospy.ServiceProxy("/reset_counter", Empty)
+        self.timer_reset = rospy.Timer(rospy.Duration(self.reset_interval), self.timerResetCallback)
+
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.number
+        self.num_pub.publish(msg)
+    def timerResetCallback(self, event):
+        rospy.loginfo("solicitando reset da contagem")
+        self.client_reset()
+        
+        
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("number_publisher_node")	        # Mudar
+        NumberPublisher()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+
+\end{lstlisting}
+
+\section{Launch files}
+Os arquivos de lançamento (launch files) em ROS (Robot Operating System) são usados para iniciar múltiplos nós (nodes) e definir suas configurações de maneira automatizada e conveniente. Esses arquivos são escritos em XML e têm a extensão .launch. Eles permitem que o usuário especifique a estrutura e os parâmetros necessários para a execução de um sistema robótico complexo
+\begin{lstlisting}[style=xmlStyle, title=counter\_cpp.launch] 
+<launch>
+    <!-- Define um argumento chamado 'number_topic' com um valor padrao '/number'. 
+         Este argumento pode ser substituido na linha de comando ao iniciar o arquivo de lancamento. -->
+    <arg name="number_topic" default="/number"/>
+    
+    <!-- Inicia um no chamado 'counter_cpp' do pacote 'my_project_cpp', executando o tipo 'counter'.
+         A saida do no e direcionada para a tela ('screen'). -->
+    <node name="counter_cpp" pkg="my_project_cpp" type="counter" output="screen">   
+        
+        <!-- Redireciona o topico '/current_count' para '/count', alterando a comunicacao entre os nos
+             sem necessidade de modificar o codigo-fonte do no. -->
+        <remap from="/current_count" to="/count"/>
+        
+        <!-- Redireciona o topico '/number' para o valor do argumento 'number_topic'. 
+             Neste caso, sera '/number' a menos que o argumento seja substituido. -->
+        <remap from="/number" to="$(arg number_topic)"/>
+    </node> 
+
+    <!-- Inicia outro no chamado 'counter_cpp2' do pacote 'my_project_cpp', tambem executando o tipo 'counter'.
+         A saida deste no tambem e direcionada para a tela ('screen'). -->
+    <node name="counter_cpp2" pkg="my_project_cpp" type="counter" output="screen">   
+        <!-- Este no nao possui remapeamentos de topicos definidos. -->
+    </node> 
+</launch>
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlStyle, title=my\_project\_cpp.launch] 
+<launch>
+    <!-- Define um argumento chamado 'new_counter' com um valor padrao 'True'.
+         Este argumento pode ser usado para controlar a inclusao condicional de nos ou grupos. -->
+    <arg name="new_counter" value="True"/>
+    
+    <!-- Inclui outro arquivo de lancamento localizado no pacote 'my_project_bringup'.
+         O arquivo incluido e 'counter_cpp.launch'. -->
+    <include file="$(find my_project_bringup)/launch/counter_cpp.launch">
+        
+        <!-- Passa um argumento para o arquivo de lancamento incluido.
+             Define 'number_topic' com o valor 'new_number' no arquivo incluido. -->
+        <arg name="number_topic" value="new_number"/>
+    </include>
+    
+    <!-- Inicia um no chamado 'num_pub_cpp' do pacote 'my_project_cpp', executando o tipo 'number_publisher'.
+         A saida do no e direcionada para a tela ('screen'). -->
+    <node name="num_pub_cpp" pkg="my_project_cpp" type="number_publisher" output="screen"/>
+    
+    <!-- Agrupa nos condicionalmente baseado no valor do argumento 'new_counter'.
+         O grupo so sera incluido se 'new_counter' for verdadeiro ('True'). -->
+    <group if="$(arg new_counter)">
+        
+        <!-- Inicia um no chamado 'num_pub_cpp_2' do pacote 'my_project_cpp', executando o tipo 'number_publisher'.
+             A saida deste no tambem e direcionada para a tela ('screen'). -->
+        <node name="num_pub_cpp_2" pkg="my_project_cpp" type="number_publisher" output="screen"/>
+    </group>
+    
+</launch>
+
+\end{lstlisting}
+\section{ROS paramater cpp part I}
+\begin{lstlisting}[style=cpptyle, title=terminal ROS] 
+        rosparam set    set parameter
+        rosparam get    get parameter
+        rosparam load   load parameters from file
+        rosparam dump   dump parameters to file
+        rosparam delete delete parameter
+        rosparam list   list parameter names
+\end{lstlisting}
+
+\textbf{para setar o parametro no projeto você vai ter que carregar o package individual se não ele nao vai carregar o parametro}
+
+\textbf{a criação do pkg de launch não necessita de pkgs adicionais}
+depois de feito esse processo o pram ele aparce na lista
+\begin{lstlisting}[style=bashstyle, title=terminal ROS] 
+catkin_create_pkg my_project_bringup
+
+catkin_make --only-pkg-with-deps my_project_cpp
+roslaunch <package_name> <launch_name> 
+\end{lstlisting}
+\begin{lstlisting}[style=cppstyle, title=counter.cpp] 
+#include <iostream>
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class Counter {
+public:
+    Counter(ros::NodeHandle *nh) {
+        count = 0;                                                                           
+        publish_interval = 1;
+
+        nh->setParam("custom_param", false);
+        if(nh->getParam("initial_count", count)){
+            ROS_INFO("contagem inicida %f", count);
+        }else{
+            ROS_INFO("contagem inicial nao iniciadada");
+        }
+        nh->param<double>("pub_rate", publish_interval, 1);
+
+        num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+        count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+        timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+        reset_srv = nh->advertiseService("/reset_counter", &Counter::resetServerCallback, this);
+    }
+
+    // callback do subscribe
+    void numberCallBack(const std_msgs::Float64 &msg) {
+        count += msg.data;
+        ROS_INFO("CONTAGEM ATUAL: %f", count);
+    }
+
+    // callback do publish
+    void timerCallback(const ros::TimerEvent &event) {
+        std_msgs::Float64 msg;
+        msg.data = count;
+        count_pub.publish(msg); 
+    }
+
+    bool resetServerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res) {
+        count = 0;
+        ROS_INFO("resetando a contagem");
+        return true;
+    }
+
+private:
+    double count;
+    double publish_interval;
+    ros::Subscriber num_sub;
+    ros::Publisher count_pub;
+    ros::Timer timer_pub;
+    ros::ServiceServer reset_srv;
+};
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "counter_node");
+    ros::NodeHandle nh;//deixando claro que questamos trabalhando com o namespace privado do ROS
+    Counter counter(&nh);
+    ros::spin();
+    return 0;
+}
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[style=xmlstyle, title=counter\_cpp.launch] 
+<launch>
+    <arg name = "number_topic" default= "/number"/>
+    <param  name="initial_count" type = "double" value= "3.1415" />
+    <param  name="pub_rate" type = "double" value= "2.5" />
+    <node name = "counter_cpp" pkg = "my_project_cpp" type="counter" output="screen" >   
+        <remap from= "/number" to="$(arg number_topic)" />  
+    </node> 
+</launch>
+\end{lstlisting}
+\subsection{adendos}
+tive muito problema pois tinha definido o nó para namesapces privados, quando busquei o parametro do launch , não achava de jeito nenhum
+definindo o parametro para o namesapce privado
+\begin{lstlisting}[style=xmlStyle, title=counter\_cpp.launch] 
+<launch>
+    <arg name="number_topic" default="/number"/>
+    <param name="initial_count" type="double" value="3.1415"/>
+    <node name="counter_cpp" pkg="my_project_cpp" type="counter" output="screen">
+        <remap from="/number" to="$(arg number_topic)"/>
+    </node>
+</launch>
+\end{lstlisting}
+\begin{lstlisting}[style=pythonStyle, title=counter.cpp] 
+	#include <iostream>
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class Counter {
+public:
+    Counter(ros::NodeHandle *nh) {
+        count = 0;
+        publish_interval = 1.0;
+
+        nh->setParam("custom_param", false);
+        if (nh->getParam("initial_count", count)) {
+            ROS_INFO("Contagem inicial: %f", count);
+        } else {
+            ROS_INFO("Contagem inicial não iniciada");
+        }
+
+        num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+        count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+        timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+        reset_srv = nh->advertiseService("/reset_counter", &Counter::resetServerCallback, this);
+    }
+
+    // Callback do subscribe
+    void numberCallBack(const std_msgs::Float64::ConstPtr& msg) {
+        count += msg->data;
+        ROS_INFO("CONTAGEM ATUAL: %f", count);
+    }
+
+    // Callback do publish
+    void timerCallback(const ros::TimerEvent& event) {
+        std_msgs::Float64 msg;
+        msg.data = count;
+        count_pub.publish(msg);
+    }
+
+    bool resetServerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res) {
+        count = 0;
+        ROS_INFO("Resetando a contagem");
+        return true;
+    }
+
+private:
+    double count;
+    double publish_interval;
+    ros::Subscriber num_sub;
+    ros::Publisher count_pub;
+    ros::Timer timer_pub;
+    ros::ServiceServer reset_srv;
+};
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "counter_node");
+    ros::NodeHandle nh("\~");//definindo namespace padrão como o privado
+    Counter counter(&nh);
+    ros::spin();
+    return 0;
+}
+\end{lstlisting}
+\section{ROS parameter cpp partII}
+\subsection{checagem da existencia do parametro}
+A checagem acontece dentro da classe do nó , e a declaração dentro do launchfile
+\begin{lstlisting}[style=cppStyle, title=counter.cpp]
+#include <iostream>
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class Counter {
+public:
+    Counter(ros::NodeHandle *nh) {
+        count = 0;                                                                           
+        publish_interval = 1;
+
+        if(nh->getParam("initial_count", count)){
+            ROS_INFO("contagem inicida %f", count);
+        }else{
+            ROS_INFO("contagem inicial nao iniciadada");
+        }
+        nh->param<double>("pub_rate", publish_interval, 1);
+        if(nh->hasParam("pub_rate")||nh->hasParam("initial_count")){
+            ROS_WARN("Parametros customizados");
+            nh->setParam("custom_param", true);
+        }else{
+           nh->setParam("custom_param", false); 
+        }
+
+        num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+        count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+        timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+        reset_srv = nh->advertiseService("/reset_counter", &Counter::resetServerCallback, this);
+    }
+
+    // callback do subscribe
+    void numberCallBack(const std_msgs::Float64 &msg) {
+        count += msg.data;
+        ROS_INFO("CONTAGEM ATUAL: %f", count);
+    }
+
+    // callback do publish
+    void timerCallback(const ros::TimerEvent &event) {
+        std_msgs::Float64 msg;
+        msg.data = count;
+        count_pub.publish(msg); 
+    }
+
+    bool resetServerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res) {
+        count = 0;
+        ROS_INFO("resetando a contagem");
+        return true;
+    }
+
+private:
+    double count;
+    double publish_interval;
+    ros::Subscriber num_sub;
+    ros::Publisher count_pub;
+    ros::Timer timer_pub;
+    ros::ServiceServer reset_srv;
+};
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "counter_node");
+    ros::NodeHandle nh;//deixando claro que questamos trabalhando com o namespace privado do ROS
+    Counter counter(&nh);
+    ros::spin();
+    return 0;
+}
+
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlstyle, title=counter\_cpp.launch]
+<launch>
+    <arg name = "number_topic" default= "/number"/>
+    <param  name="initial_count" type = "double" value= "3.1415" />
+    <param  name="pub_rate" type = "double" value= "2.5" />
+    <node name = "counter_cpp" pkg = "my_project_cpp" type="counter" output="screen" >   
+        <remap from= "/number" to="$(arg number_topic)" />  
+    </node> 
+</launch>
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlstyle, title=number\_publisher\_cpp.launch]
+<launch>
+    <arg name = "number_topic" default= "/number"/>
+    <param  name="initial_count" type = "double" value= "3.1415" />
+    <param  name="pub_rate" type = "double" value= "2.5" />
+    <node name = "counter_cpp" pkg = "my_project_cpp" type="counter" output="screen" >   
+        <remap from= "/number" to="$(arg number_topic)" />  
+    </node> 
+</launch>
+\end{lstlisting}
+\subsection{deletando parametros}
+
+\begin{lstlisting}[style=cppstyle, title=counter.cpp] 
+#include <iostream>
+#include "ros/ros.h"
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+
+class Counter {
+public:
+    Counter(ros::NodeHandle *nh) {
+        count = 0;                                                                           
+        publish_interval = 1;
+
+        if(nh->getParam("initial_count", count)){
+            ROS_INFO("contagem inicida %f", count);
+        }else{
+            ROS_INFO("contagem inicial nao iniciadada");
+        }
+        nh->param<double>("pub_rate", publish_interval, 1);
+        if(nh->hasParam("pub_rate")||nh->hasParam("initial_count")){
+            ROS_WARN("Parametros customizados");
+            nh->setParam("custom_param", true);
+        }else{
+           nh->setParam("custom_param", false); 
+        }
+        if(nh->hasParam("pub_rate")){
+            ROS_INFO("deletando parametro");
+            nh->deleteParam("pub_rate");
+            nh->deleteParam("initial_count");
+        }
+
+        num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+        count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+        timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+        reset_srv = nh->advertiseService("/reset_counter", &Counter::resetServerCallback, this);
+    }
+
+    // callback do subscribe
+    void numberCallBack(const std_msgs::Float64 &msg) {
+        count += msg.data;
+        ROS_INFO("CONTAGEM ATUAL: %f", count);
+    }
+
+    // callback do publish
+    void timerCallback(const ros::TimerEvent &event) {
+        std_msgs::Float64 msg;
+        msg.data = count;
+        count_pub.publish(msg); 
+    }
+
+    bool resetServerCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res) {
+        count = 0;
+        ROS_INFO("resetando a contagem");
+        return true;
+    }
+
+private:
+    double count;
+    double publish_interval;
+    ros::Subscriber num_sub;
+    ros::Publisher count_pub;
+    ros::Timer timer_pub;
+    ros::ServiceServer reset_srv;
+};
+
+int main(int argc, char **argv) {
+    ros::init(argc, argv, "counter_node");
+    ros::NodeHandle nh;//deixando claro que questamos trabalhando com o namespace privado do ROS
+    Counter counter(&nh);
+    ros::spin();
+    return 0;
+}
+
+\end{lstlisting}
+\begin{lstlisting}[style=xmlstyle, title=counter\_cpp.launch] 
+<launch>
+    <arg name = "number_topic" default= "/number"/>
+    <param  name="initial_count" type = "double" value= "3.1415" />
+    <param  name="pub_rate" type = "double" value= "2.5" />
+    <param  name="delete_param" type = "bool" value= "True" />
+    <node name = "counter_cpp" pkg = "my_project_cpp" type="counter" output="screen" >   
+        <remap from= "/number" to="$(arg number_topic)" />  
+    </node> 
+</launch>
+\end{lstlisting}
+
+\subsection{adicionando parametros a um arquivo separado}
+\begin{lstlisting}[style=xmlstyle, title=counter\_cpp.launch] 
+<launch>
+    <arg name = "number_topic" default= "/number"/>
+    <!--param  name="initial_count" type = "double" value= "3.1415" />
+    <param  name="pub_rate" type = "double" value= "2.5" /-->
+    <param  name="delete_param" type = "bool" value= "True" />
+    
+    <rospram command="load" file = "$(my_project_bringup)/config/my_project.yaml"/>
+
+    <node name = "counter_cpp" pkg = "my_project_cpp" type="counter" output="screen" >   
+        <remap from= "/number" to="$(arg number_topic)" />  
+    </node> 
+</launch>
+\end{lstlisting}
+\begin{lstlisting}[style=mystyle, title=my\_project.yaml] 
+initial_count: 5
+pub_rate: 0.1
+\end{lstlisting}
+
+\section{ROS parameter com python}
+prestar sempre atenção no namespace  dos parametros.
+
+\begin{lstlisting}[style=pythonstyle, title=counter.py] 
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import Float64
+from std_srvs.srv import Empty, EmptyResponse
+
+class Counter:
+
+    def __init__(self):
+        self.count = rospy.get_param("initial_count", 0)
+        self.publish_interval = rospy.get_param("~pub_rate", 3)
+        
+        
+        if(rospy.has_param("~pub_rate") or rospy.has_param("initial_count")):
+            rospy.loginfo("parametros customizados")
+            rospy.set_param("~custom_param", True)
+        else:
+            rospy.set_param("~custom_param", False)
+            
+        if(rospy.has_param("~delete_param")):
+            rospy.loginfo("deletando parametros")   
+            if(rospy.has_param("~pub_rate")):
+                rospy.delete_param("~pub_rate") 
+            if(rospy.has_param("initial_count")):
+                rospy.delete_param("initial_count")     
+            
+       
+        self.num_sub = rospy.Subscriber("/number", Float64, self.numberCallback, queue_size = 10)
+        self.count_pub = rospy.Publisher("/current_count", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+        self.reset_srv = rospy.Service('reset_counter', Empty, self.resetSrvCallback)
+        
+    def numberCallback(self, msg):
+        self.count = self.count + msg.data
+        rospy.loginfo("Contagem Atual " + str(self.count))
+
+
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.count
+        self.count_pub.publish(msg)
+    def resetSrvCallback(self, req):
+        self.count = 0 
+        rospy.loginfo("resetando a contagem")
+        return EmptyResponse()
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("counter_node")
+        Counter()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+\end{lstlisting}
+\begin{lstlisting}[style=xmlstyle, title=counter\_py.launch]
+    <launch>
+        <arg name ="number_topic" default="/number"/>
+        <param name="initial_count" type = "double" value ="-10.0"/>
+        <node name = "counter_py" pkg ="my_project_py" type = "counter.py" output= "screen" >
+            <param name="pub_rate" type = "double" value ="0.1"/>
+             <param name="~delete_param" type = "bool" value ="false"/>
+            <remap from="/number" to ="$(arg number_topic)"/>
+        </node>
+
+          <node name = "counter_py2" pkg ="my_project_py" type = "counter.py" output= "screen" >
+            <param name="pub_rate" type = "double" value ="0.1"/>
+            <remap from="/number" to ="$(arg number_topic)"/>
+        </node>
+        
+        <!--node name = "num_pub    " pkg ="my_project_py" type = "counter.py" output= "screen" /-->
+
+
+    </launch>
+\end{lstlisting}
+\begin{lstlisting}[style=pythonstyle, title=number\_publisher.py]
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import Float64
+from std_srvs.srv import Empty
+
+class NumberPublisher:         	            
+
+    def __init__(self):
+        self.number = rospy.get_param("num", 3.1)
+        self.publish_interval = rospy.get_param("pub_interval", 1.5)
+        self.reset_interval = rospy.get_param("reset", 8)
+
+        self.num_pub = rospy.Publisher("/number", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+        self.timer_reset = rospy.Timer(rospy.Duration(self.reset_interval), self.timerResetCallback)
+        self.client_reset = rospy.ServiceProxy("reset_counter", Empty) 
+
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.number
+        self.num_pub.publish(msg)
+        
+    def timerResetCallback(self, event):
+        rospy.loginfo("solicitacao de reset")
+        self.client_reset()
+    
+
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("number_publisher_node")	       
+        NumberPublisher()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+
+
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlstyle, title=my\_project\_py.launch]
+<launch>
+    
+    <include file = "$(find my_project_bringup)/launch/counter_py.launch">
+        <arg name ="number_topic" value = "new_number"/>
+        
+    </include>
+
+    <node name= "num_pub_py" pkg ="my_project_py" type="number_publisher.py" output ="screen"/>
+    <param name= "num"  type = "double" value = "4.5"/>
+    <param name= "pub_interval" type = "double" value= "2.5"/>
+    <param name= "reset" type= "double" value = "2"/>
+
+</launch>
+\end{lstlisting}
+\section{Custom Message}
+\begin{lstlisting}[style=bashStyle, title=comando do terminal para o pacote de std msg]
+catkin_create_pkg my_project_msg std_msgs message_generation
+\end{lstlisting}
+configuração do cmake list interno do pkg de custom message
+\begin{lstlisting}[style=xmlstyle, title=my\_project\_msg/CMakeLists.txt] 
+cmake_minimum_required(VERSION 3.0.2)
+project(my_project_msg)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  message_generation
+  std_msgs
+)
+
+add_message_files(
+  FILES
+  CounterHistory.msg
+
+)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+
+)
+
+catkin_package(
+  CATKIN_DEPENDS message_generation std_msgs
+
+)
+\end{lstlisting}
+foi adicionado <exec\_depend>message\_generation</exec\_depend> pois o ROS tem dois packages com o mesmo nome
+\begin{lstlisting}[style=xmlstyle, title=src/my\_project\_msg/package.xml]
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_project_msg</name>
+  <version>0.0.0</version>
+  <description>The my_project_msg package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="marcos@todo.todo">marcos</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/my_project_msg</url> -->
+
+
+  <!-- Author tags are optional, multiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintainers, but could be -->
+  <!-- Example: -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- Examples: -->
+  <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
+  <!--   <depend>roscpp</depend> -->
+  <!--   Note that this is equivalent to the following: -->
+  <!--   <build_depend>roscpp</build_depend> -->
+  <!--   <exec_depend>roscpp</exec_depend> -->
+  <!-- Use build_depend for packages you need at compile time: -->
+  <!--   <build_depend>message_generation</build_depend> -->
+  <!-- Use build_export_depend for packages you need in order to build against this package: -->
+  <!--   <build_export_depend>message_generation</build_export_depend> -->
+  <!-- Use buildtool_depend for build tool packages: -->
+  <!--   <buildtool_depend>catkin</buildtool_depend> -->
+  <!-- Use exec_depend for packages you need at runtime: -->
+  <!--   <exec_depend>message_runtime</exec_depend> -->
+  <!-- Use test_depend for packages you need only for testing: -->
+  <!--   <test_depend>gtest</test_depend> -->
+  <!-- Use doc_depend for packages you need only for building documentation: -->
+  <!--   <doc_depend>doxygen</doc_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>message_generation</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
+
+\end{lstlisting}
+\begin{lstlisting}[style=xmlstyle, title=src/my\_project\_msg/msg/CounterHistory.msg]
+float64 current_value
+float64 last_value
+\end{lstlisting}
+
+\section{Custom message com c++}
+\begin{lstlisting}[style=xmlstyle, title=src/my\_project\_cpp/CMakeLists.txt] 
+cmake_minimum_required(VERSION 3.0.2)
+project(my_project_cpp)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  std_msgs
+  my_project_msg
+)
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+
+
+## Uncomment this if the package has a setup.py. This macro ensures
+## modules and global scripts declared therein get installed
+## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
+# catkin_python_setup()
+
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+
+## To declare and build messages, services or actions from within this
+## package, follow these steps:
+## * Let MSG_DEP_SET be the set of packages whose message types you use in
+##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
+## * In the file package.xml:
+##   * add a build_depend tag for "message_generation"
+##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
+##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
+##     but can be declared for certainty nonetheless:
+##     * add a exec_depend tag for "message_runtime"
+## * In this file (CMakeLists.txt):
+##   * add "message_generation" and every package in MSG_DEP_SET to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * add "message_runtime" and every package in MSG_DEP_SET to
+##     catkin_package(CATKIN_DEPENDS ...)
+##   * uncomment the add_*_files sections below as needed
+##     and list every .msg/.srv/.action file to be processed
+##   * uncomment the generate_messages entry below
+##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
+
+## Generate messages in the 'msg' folder
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
+
+## Generate services in the 'srv' folder
+# add_service_files(
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
+
+## Generate actions in the 'action' folder
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
+
+## Generate added messages and services with any dependencies listed here
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+
+## To declare and build dynamic reconfigure parameters within this
+## package, follow these steps:
+## * In the file package.xml:
+##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
+## * In this file (CMakeLists.txt):
+##   * add "dynamic_reconfigure" to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * uncomment the "generate_dynamic_reconfigure_options" section below
+##     and list every .cfg file to be processed
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+# generate_dynamic_reconfigure_options(
+#   cfg/DynReconf1.cfg
+#   cfg/DynReconf2.cfg
+# )
+
+###################################
+## catkin specific configuration ##
+###################################
+## The catkin_package macro generates cmake config files for your package
+## Declare things to be passed to dependent projects
+## INCLUDE_DIRS: uncomment this if your package contains header files
+## LIBRARIES: libraries you create in this project that dependent projects also need
+## CATKIN_DEPENDS: catkin_packages dependent projects also need
+## DEPENDS: system dependencies of this project that dependent projects also need
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES my_project_cpp
+#  CATKIN_DEPENDS roscpp std_msgs
+#  DEPENDS system_lib
+)
+
+###########
+## Build ##
+###########
+
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+## Declare a C++ library
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/my_project_cpp.cpp
+# )
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Declare a C++ executable
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/my_project_cpp_node.cpp)
+
+## Rename C++ executable without prefix
+## The above recommended prefix causes long target names, the following renames the
+## target back to the shorter version for ease of user use
+## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Specify libraries to link a library or executable target against
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
+
+#############
+## Install ##
+#############
+
+# all install targets should use catkin DESTINATION variables
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+
+## Mark executable scripts (Python etc.) for installation
+## in contrast to setup.py, you can choose the destination
+# catkin_install_python(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark executables for installation
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+# install(TARGETS ${PROJECT_NAME}_node
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark libraries for installation
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
+# install(TARGETS ${PROJECT_NAME}
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+# )
+
+## Mark cpp header files for installation
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
+
+#############
+## Testing ##
+#############
+
+## Add gtest based cpp test target and link libraries
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_my_project_cpp.cpp)
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# endif()
+
+## Add folders to be run by python nosetests
+# catkin_add_nosetests(test)
+add_executable(counter src/counter.cpp)
+target_link_libraries(counter ${catkin_LIBRARIES})
+
+add_executable(number_publisher src/number_publisher.cpp)
+target_link_libraries(number_publisher ${catkin_LIBRARIES})
+\end{lstlisting}
+
+\begin{lstlisting}[style=xmlstyle, title=src/my\_project\_cpp/package.xml] 
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_project_cpp</name>
+  <version>0.0.0</version>
+  <description>The my_project_cpp package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="marcos@todo.todo">marcos</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/my_project_cpp</url> -->
+
+
+  <!-- Author tags are optional, multiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintainers, but could be -->
+  <!-- Example: -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- Examples: -->
+  <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
+  <!--   <depend>roscpp</depend> -->
+  <!--   Note that this is equivalent to the following: -->
+  <!--   <build_depend>roscpp</build_depend> -->
+  <!--   <exec_depend>roscpp</exec_depend> -->
+  <!-- Use build_depend for packages you need at compile time: -->
+  <!--   <build_depend>message_generation</build_depend> -->
+  <!-- Use build_export_depend for packages you need in order to build against this package: -->
+  <!--   <build_export_depend>message_generation</build_export_depend> -->
+  <!-- Use buildtool_depend for build tool packages: -->
+  <!--   <buildtool_depend>catkin</buildtool_depend> -->
+  <!-- Use exec_depend for packages you need at runtime: -->
+  <!--   <exec_depend>message_runtime</exec_depend> -->
+  <!-- Use test_depend for packages you need only for testing: -->
+  <!--   <test_depend>gtest</test_depend> -->
+  <!-- Use doc_depend for packages you need only for building documentation: -->
+  <!--   <doc_depend>doxygen</doc_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>my_project_msg</build_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>my_project_msg</build_export_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>my_project_msg</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
+
+\end{lstlisting}
+No momento do curso ele nao entrava na funcao de callback portanto nao atualizava os parametros da funcao, no terminal.
+\begin{lstlisting}[style=cppstyle, title=src/my\_project\_cpp/src/counter.cpp] 
+#include "ros/ros.h"
+
+// Messagens
+#include "std_msgs/Float64.h"
+#include "std_srvs/Empty.h"
+#include "my_project_msg/CounterHistory.h"
+
+
+class Counter{
+
+    public:
+        Counter(ros::NodeHandle *nh){
+            count = 0;
+            publish_interval = 1;
+
+            if (nh->getParam("initial_count", count) ){
+                ROS_INFO("Contagem inicial em %f", count);
+            }
+            else{
+                ROS_INFO("Contagem inicial nao definido");
+            }   
+            nh->param<double>("pub_rate", publish_interval, 1);
+
+            if (nh->hasParam("pub_rate") || nh->hasParam("initial_count")  ){
+                ROS_WARN("Parametros customizados");
+                nh->setParam("custom_param", true);
+            }
+            else{
+                nh->setParam("custom_param", false);
+            }
+
+            if (nh->hasParam("delete_param")){
+                ROS_ERROR("Deletando Parametros");
+                nh->deleteParam("pub_rate");
+                nh->deleteParam("initial_count");
+            }
+
+            last_count = count;
+            cycles = 0;
+
+            num_sub = nh->subscribe("/number", 10, &Counter::numberCallback, this);
+            count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+
+            timer_pub = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+            reset_srv = nh->advertiseService("/reset_counter", &Counter::resetSrvCallback, this);
+
+            history_pub = nh->advertise<my_project_msg::CounterHistory>("/history_counter", 10);
+        }
+
+        void numberCallback(const std_msgs::Float64 &msg){
+            ROS_INFO("Callback chamado com valor: %f", msg.data);
+            cycles++;
+            last_count = count;
+            count += msg.data;
+            ROS_INFO("Contagem Atual %f", count);
+        }
+
+        void timerCallback(const ros::TimerEvent &event){
+            ROS_INFO("Timer chamado");
+            std_msgs::Float64 msg;
+            msg.data = count;
+            count_pub.publish(msg);
+
+            my_project_msg::CounterHistory history_msg;
+            history_msg.current_value = count;
+            history_msg.last_value = last_count;
+            history_msg.cycles = cycles;
+            history_pub.publish(history_msg);
+        }
+
+        bool resetSrvCallback(std_srvs::Empty::Request &req, std_srvs::Empty::Response &res){
+            count = 0;
+            ROS_INFO("Resetando a contagem.");
+            return true;
+        }
+
+        
+    private:
+        double count;
+        double publish_interval;
+        double last_count;
+        int cycles;
+
+        ros::Publisher history_pub;
+        ros::Subscriber num_sub;
+        ros::Publisher count_pub;
+        ros::Timer timer_pub;
+        ros::ServiceServer reset_srv;
+        ros::ServiceServer check_greater_srv;
+};
+
+
+int main(int argc, char **argv){
+
+    ros::init(argc, argv, "counter_node");
+    ros::NodeHandle nh;
+    Counter counter = Counter(&nh);
+    ros::spin();
+
+    return 0;
+}
+
+\end{lstlisting}
+\section{Custom message em python}
+O codigo nao entra no callback, portanto não atualiza os parametros
+\begin{lstlisting}[style=pythonstyle, title=src/my\_project\_py/scripts/counter.py] 
+#!/usr/bin/env python3
+import rospy
+from std_msgs.msg import Float64
+from std_srvs.srv import Empty, EmptyResponse
+from my_project_msg.msg import CounterHistory
+
+class Counter:
+
+    def __init__(self):
+        self.count = rospy.get_param("initial_count", 0)
+        self.publish_interval = rospy.get_param("~pub_rate", 3)
+        
+        
+        if(rospy.has_param("~pub_rate") or rospy.has_param("initial_count")):
+            rospy.loginfo("parametros customizados")
+            rospy.set_param("~custom_param", True)
+        else:
+            rospy.set_param("~custom_param", False)
+            
+        if(rospy.has_param("~delete_param")):
+            rospy.loginfo("deletando parametros")   
+            if(rospy.has_param("~pub_rate")):
+                rospy.delete_param("~pub_rate") 
+            if(rospy.has_param("initial_count")):
+                rospy.delete_param("initial_count")     
+        self.last_count = self.count
+        self.cycles = 0    
+       
+        self.num_sub = rospy.Subscriber("/number", Float64, self.numberCallback, queue_size = 10)
+        self.count_pub = rospy.Publisher("/current_count", Float64, queue_size = 10)
+        self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
+        self.reset_srv = rospy.Service('reset_counter', Empty, self.resetSrvCallback)
+        self.history_pub = rospy.Publisher("/history_count", CounterHistory, queue_size = 10)
+        
+    def numberCallback(self, msg):
+        self.cycles = self.cycles + 1
+        self.last_count = self.count
+        self.count = self.count + msg.data
+        rospy.loginfo("Contagem Atual " + str(self.count))
+
+
+    def timerCallback(self, event):
+        msg = Float64()
+        msg.data = self.count
+        self.count_pub.publish(msg)
+        history_msg = CounterHistory()
+        history_msg.current_value = self.count
+        history_msg.last_value = self.last_count
+        history_msg.cycles = self.cycles
+        self.history_pub.publish(history_msg)
+        
+    def resetSrvCallback(self, req):
+        self.count = 0 
+        rospy.loginfo("resetando a contagem")
+        return EmptyResponse()
+
+if __name__ == '__main__':
+    try:
+        rospy.init_node("counter_node")
+        Counter()
+        rospy.spin()
+    except rospy.ROSInterruptException:
+        pass
+\end{lstlisting}
+
+\begin{lstlisting}[style=mystyle, title=src/my\_project\_py/package.xml] 
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_project_py</name>
+  <version>0.0.0</version>
+  <description>The my_project_py package</description>
+
+  <!-- One maintainer tag required, multiple allowed, one person per tag -->
+  <!-- Example:  -->
+  <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+  <maintainer email="marcos@todo.todo">marcos</maintainer>
+
+
+  <!-- One license tag required, multiple allowed, one license per tag -->
+  <!-- Commonly used license strings: -->
+  <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+  <license>TODO</license>
+
+
+  <!-- Url tags are optional, but multiple are allowed, one per tag -->
+  <!-- Optional attribute type can be: website, bugtracker, or repository -->
+  <!-- Example: -->
+  <!-- <url type="website">http://wiki.ros.org/my_project_py</url> -->
+
+
+  <!-- Author tags are optional, multiple are allowed, one per tag -->
+  <!-- Authors do not have to be maintainers, but could be -->
+  <!-- Example: -->
+  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+
+
+  <!-- The *depend tags are used to specify dependencies -->
+  <!-- Dependencies can be catkin packages or system dependencies -->
+  <!-- Examples: -->
+  <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
+  <!--   <depend>roscpp</depend> -->
+  <!--   Note that this is equivalent to the following: -->
+  <!--   <build_depend>roscpp</build_depend> -->
+  <!--   <exec_depend>roscpp</exec_depend> -->
+  <!-- Use build_depend for packages you need at compile time: -->
+  <!--   <build_depend>message_generation</build_depend> -->
+  <!-- Use build_export_depend for packages you need in order to build against this package: -->
+  <!--   <build_export_depend>message_generation</build_export_depend> -->
+  <!-- Use buildtool_depend for build tool packages: -->
+  <!--   <buildtool_depend>catkin</buildtool_depend> -->
+  <!-- Use exec_depend for packages you need at runtime: -->
+  <!--   <exec_depend>message_runtime</exec_depend> -->
+  <!-- Use test_depend for packages you need only for testing: -->
+  <!--   <test_depend>gtest</test_depend> -->
+  <!-- Use doc_depend for packages you need only for building documentation: -->
+  <!--   <doc_depend>doxygen</doc_depend> -->
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>my_project_msg</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>my_project_msg</build_export_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>my_project_msg</exec_depend>
+
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
+
+\end{lstlisting}
+\begin{lstlisting}[style=mystyle, title=src/my\_project\_py/CMakeLists.txt]
+cmake_minimum_required(VERSION 3.0.2)
+project(my_project_py)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+## Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  rospy
+  std_msgs
+  my_project_msg
+)
+
+## System dependencies are found with CMake's conventions
+# find_package(Boost REQUIRED COMPONENTS system)
+
+
+## Uncomment this if the package has a setup.py. This macro ensures
+## modules and global scripts declared therein get installed
+## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
+# catkin_python_setup()
+
+################################################
+## Declare ROS messages, services and actions ##
+################################################
+
+## To declare and build messages, services or actions from within this
+## package, follow these steps:
+## * Let MSG_DEP_SET be the set of packages whose message types you use in
+##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
+## * In the file package.xml:
+##   * add a build_depend tag for "message_generation"
+##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
+##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
+##     but can be declared for certainty nonetheless:
+##     * add a exec_depend tag for "message_runtime"
+## * In this file (CMakeLists.txt):
+##   * add "message_generation" and every package in MSG_DEP_SET to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * add "message_runtime" and every package in MSG_DEP_SET to
+##     catkin_package(CATKIN_DEPENDS ...)
+##   * uncomment the add_*_files sections below as needed
+##     and list every .msg/.srv/.action file to be processed
+##   * uncomment the generate_messages entry below
+##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
+
+## Generate messages in the 'msg' folder
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
+
+## Generate services in the 'srv' folder
+# add_service_files(
+#   FILES
+#   Service1.srv
+#   Service2.srv
+# )
+
+## Generate actions in the 'action' folder
+# add_action_files(
+#   FILES
+#   Action1.action
+#   Action2.action
+# )
+
+## Generate added messages and services with any dependencies listed here
+# generate_messages(
+#   DEPENDENCIES
+#   std_msgs
+# )
+
+################################################
+## Declare ROS dynamic reconfigure parameters ##
+################################################
+
+## To declare and build dynamic reconfigure parameters within this
+## package, follow these steps:
+## * In the file package.xml:
+##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
+## * In this file (CMakeLists.txt):
+##   * add "dynamic_reconfigure" to
+##     find_package(catkin REQUIRED COMPONENTS ...)
+##   * uncomment the "generate_dynamic_reconfigure_options" section below
+##     and list every .cfg file to be processed
+
+## Generate dynamic reconfigure parameters in the 'cfg' folder
+# generate_dynamic_reconfigure_options(
+#   cfg/DynReconf1.cfg
+#   cfg/DynReconf2.cfg
+# )
+
+###################################
+## catkin specific configuration ##
+###################################
+## The catkin_package macro generates cmake config files for your package
+## Declare things to be passed to dependent projects
+## INCLUDE_DIRS: uncomment this if your package contains header files
+## LIBRARIES: libraries you create in this project that dependent projects also need
+## CATKIN_DEPENDS: catkin_packages dependent projects also need
+## DEPENDS: system dependencies of this project that dependent projects also need
+catkin_package(
+#  INCLUDE_DIRS include
+#  LIBRARIES my_project_py
+#  CATKIN_DEPENDS rospy std_msgs
+#  DEPENDS system_lib
+)
+
+###########
+## Build ##
+###########
+
+## Specify additional locations of header files
+## Your package locations should be listed before other locations
+include_directories(
+# include
+  ${catkin_INCLUDE_DIRS}
+)
+
+## Declare a C++ library
+# add_library(${PROJECT_NAME}
+#   src/${PROJECT_NAME}/my_project_py.cpp
+# )
+
+## Add cmake target dependencies of the library
+## as an example, code may need to be generated before libraries
+## either from message generation or dynamic reconfigure
+# add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Declare a C++ executable
+## With catkin_make all packages are built within a single CMake context
+## The recommended prefix ensures that target names across packages don't collide
+# add_executable(${PROJECT_NAME}_node src/my_project_py_node.cpp)
+
+## Rename C++ executable without prefix
+## The above recommended prefix causes long target names, the following renames the
+## target back to the shorter version for ease of user use
+## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+# set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+
+## Add cmake target dependencies of the executable
+## same as for the library above
+# add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+## Specify libraries to link a library or executable target against
+# target_link_libraries(${PROJECT_NAME}_node
+#   ${catkin_LIBRARIES}
+# )
+
+#############
+## Install ##
+#############
+
+# all install targets should use catkin DESTINATION variables
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+
+## Mark executable scripts (Python etc.) for installation
+## in contrast to setup.py, you can choose the destination
+# catkin_install_python(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark executables for installation
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+# install(TARGETS ${PROJECT_NAME}_node
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+## Mark libraries for installation
+## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
+# install(TARGETS ${PROJECT_NAME}
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+# )
+
+## Mark cpp header files for installation
+# install(DIRECTORY include/${PROJECT_NAME}/
+#   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+#   FILES_MATCHING PATTERN "*.h"
+#   PATTERN ".svn" EXCLUDE
+# )
+
+## Mark other files for installation (e.g. launch and bag files, etc.)
+# install(FILES
+#   # myfile1
+#   # myfile2
+#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+# )
+
+#############
+## Testing ##
+#############
+
+## Add gtest based cpp test target and link libraries
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_my_project_py.cpp)
+# if(TARGET ${PROJECT_NAME}-test)
+#   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+# endif()
+
+## Add folders to be run by python nosetests
+# catkin_add_nosetests(test)
+
+\end{lstlisting}
+\section{Custom Service}
+O diretorio para o service é criado dentro do pkg de msg pelo serviço se assemelhar. 
+Adiciona-se o service no cmake 
+
+
+\begin{lstlisting}[style=xmlstyle, title=my\_project\_msg/srv/CheckNumber.srv]
+float64 number
+---
+bool result
+\end{lstlisting}
+\begin{lstlisting}[style=xmlstyle, title=my_project_msg/CMakeLists.txt)]
+project(my\_project\_msg)
+
+## Compile as C++11, supported in ROS Kinetic and newer
+# add_compile_options(-std=c++11)
+
+\#\# Find catkin macros and libraries
+## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+  message_generation
+  std_msgs
+
+)
+add_message_files(
+  FILES
+  CounterHistory.msg
+
+)
+add_service_files(
+  FILES
+  CheckNumber.srv
+
+)
+
+generate_messages(
+  DEPENDENCIES
+  std_msgs
+
+)
+
+catkin_package(
+  CATKIN_DEPENDS message_generation std_msgs
+
+)
+\end{lstlisting}
+\begin{lstlisting}[style=mystyle, title=terminal bash]
+rossrv package my_project_msg
+rossrv show my_project_msg/CheckNumber.srv
+\end{lstlisting}
+\section{custom service em cpp}
+    \begin{itemize}
+        \begin{lstlisting}[style=mystyle, title=src/nome\_project/CMakeLists.txt] 
+        cmake_minimum_required(VERSION 3.0.2)
+        project(nome_project)
+        
+        ## Compile as C++11, supported in ROS Kinetic and newer
+        # add_compile_options(-std=c++11)
+        
+        ## Find catkin macros and libraries
+        ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
+        ## is used, also find other catkin packages
+        find_package(catkin REQUIRED COMPONENTS
+          roscpp
+          std_msgs
+          my_project_msg
+        )
+        
+        ## System dependencies are found with CMake's conventions
+        # find_package(Boost REQUIRED COMPONENTS system)
+        
+        
+        ## Uncomment this if the package has a setup.py. This macro ensures
+        ## modules and global scripts declared therein get installed
+        ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
+        # catkin_python_setup()
+        
+        ################################################
+        ## Declare ROS messages, services and actions ##
+        ################################################
+        
+        ## To declare and build messages, services or actions from within this
+        ## package, follow these steps:
+        ## * Let MSG_DEP_SET be the set of packages whose message types you use in
+        ##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
+        ## * In the file package.xml:
+        ##   * add a build_depend tag for "message_generation"
+        ##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
+        ##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
+        ##     but can be declared for certainty nonetheless:
+        ##     * add a exec_depend tag for "message_runtime"
+        ## * In this file (CMakeLists.txt):
+        ##   * add "message_generation" and every package in MSG_DEP_SET to
+        ##     find_package(catkin REQUIRED COMPONENTS ...)
+        ##   * add "message_runtime" and every package in MSG_DEP_SET to
+        ##     catkin_package(CATKIN_DEPENDS ...)
+        ##   * uncomment the add_*_files sections below as needed
+        ##     and list every .msg/.srv/.action file to be processed
+        ##   * uncomment the generate_messages entry below
+        ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
+        
+        ## Generate messages in the 'msg' folder
+        # add_message_files(
+        #   FILES
+        #   Message1.msg
+        #   Message2.msg
+        # )
+        
+        ## Generate services in the 'srv' folder
+        # add_service_files(
+        #   FILES
+        #   Service1.srv
+        #   Service2.srv
+        # )
+        
+        ## Generate actions in the 'action' folder
+        # add_action_files(
+        #   FILES
+        #   Action1.action
+        #   Action2.action
+        # )
+        
+        ## Generate added messages and services with any dependencies listed here
+        # generate_messages(
+        #   DEPENDENCIES
+        #   std_msgs
+        # )
+        
+        ################################################
+        ## Declare ROS dynamic reconfigure parameters ##
+        ################################################
+        
+        ## To declare and build dynamic reconfigure parameters within this
+        ## package, follow these steps:
+        ## * In the file package.xml:
+        ##   * add a build_depend and a exec_depend tag for "dynamic_reconfigure"
+        ## * In this file (CMakeLists.txt):
+        ##   * add "dynamic_reconfigure" to
+        ##     find_package(catkin REQUIRED COMPONENTS ...)
+        ##   * uncomment the "generate_dynamic_reconfigure_options" section below
+        ##     and list every .cfg file to be processed
+        
+        ## Generate dynamic reconfigure parameters in the 'cfg' folder
+        # generate_dynamic_reconfigure_options(
+        #   cfg/DynReconf1.cfg
+        #   cfg/DynReconf2.cfg
+        # )
+        
+        ###################################
+        ## catkin specific configuration ##
+        ###################################
+        ## The catkin_package macro generates cmake config files for your package
+        ## Declare things to be passed to dependent projects
+        ## INCLUDE_DIRS: uncomment this if your package contains header files
+        ## LIBRARIES: libraries you create in this project that dependent projects also need
+        ## CATKIN_DEPENDS: catkin_packages dependent projects also need
+        ## DEPENDS: system dependencies of this project that dependent projects also need
+        catkin_package(
+        #  INCLUDE_DIRS include
+        #  LIBRARIES nome_project
+        #  CATKIN_DEPENDS roscpp std_msgs
+        #  DEPENDS system_lib
+        )
+        
+        ###########
+        ## Build ##
+        ###########
+        
+        ## Specify additional locations of header files
+        ## Your package locations should be listed before other locations
+        include_directories(
+        # include
+          ${catkin_INCLUDE_DIRS}
+        )
+        
+        ## Declare a C++ library
+        # add_library(${PROJECT_NAME}
+        #   src/${PROJECT_NAME}/nome_project.cpp
+        # )
+        
+        ## Add cmake target dependencies of the library
+        ## as an example, code may need to be generated before libraries
+        ## either from message generation or dynamic reconfigure
+        # add_dependencies(${PROJECT_NAME} ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+        
+        ## Declare a C++ executable
+        ## With catkin_make all packages are built within a single CMake context
+        ## The recommended prefix ensures that target names across packages don't collide
+        # add_executable(${PROJECT_NAME}_node src/nome_project_node.cpp)
+        
+        ## Rename C++ executable without prefix
+        ## The above recommended prefix causes long target names, the following renames the
+        ## target back to the shorter version for ease of user use
+        ## e.g. "rosrun someones_pkg node" instead of "rosrun someones_pkg someones_pkg_node"
+        # set_target_properties(${PROJECT_NAME}_node PROPERTIES OUTPUT_NAME node PREFIX "")
+        
+        ## Add cmake target dependencies of the executable
+        ## same as for the library above
+        # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+        
+        ## Specify libraries to link a library or executable target against
+        # target_link_libraries(${PROJECT_NAME}_node
+        #   ${catkin_LIBRARIES}
+        # )
+        
+        #############
+        ## Install ##
+        #############
+        
+        # all install targets should use catkin DESTINATION variables
+        # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+        
+        ## Mark executable scripts (Python etc.) for installation
+        ## in contrast to setup.py, you can choose the destination
+        # catkin_install_python(PROGRAMS
+        #   scripts/my_python_script
+        #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        # )
+        
+        ## Mark executables for installation
+        ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
+        # install(TARGETS ${PROJECT_NAME}_node
+        #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        # )
+        
+        ## Mark libraries for installation
+        ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html
+        # install(TARGETS ${PROJECT_NAME}
+        #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        #   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+        #   RUNTIME DESTINATION ${CATKIN_GLOBAL_BIN_DESTINATION}
+        # )
+        
+        ## Mark cpp header files for installation
+        # install(DIRECTORY include/${PROJECT_NAME}/
+        #   DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
+        #   FILES_MATCHING PATTERN "*.h"
+        #   PATTERN ".svn" EXCLUDE
+        # )
+        
+        ## Mark other files for installation (e.g. launch and bag files, etc.)
+        # install(FILES
+        #   # myfile1
+        #   # myfile2
+        #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+        # )
+        
+        #############
+        ## Testing ##
+        #############
+        
+        ## Add gtest based cpp test target and link libraries
+        # catkin_add_gtest(${PROJECT_NAME}-test test/test_nome_project.cpp)
+        # if(TARGET ${PROJECT_NAME}-test)
+        #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
+        # endif()
+        
+        ## Add folders to be run by python nosetests
+        # catkin_add_nosetests(test)
+        
+        add_executable(counter src/counter.cpp)
+            
+        # Vincule as bibliotecas necessarias ao executavel\\
+        target_link_libraries(counter ${catkin_LIBRARIES})
+        
+        add_executable(number src/number_publisher.cpp)
+            
+        # Vincule as bibliotecas necessarias ao executavel\\
+        target_link_libraries(number ${catkin_LIBRARIES})
+        
+        \end{lstlisting}
+        \begin{lstlisting}[style=mystyle, title=]
+        find_package(catkin REQUIRED COMPONENTS
+          roscpp
+          std_msgs
+          my_project_msg
+        )
+        \end{lstlisting}
+        \item configurando no cmake o std\_msgs que é o pkg de msgs
+        \begin{lstlisting}[style=bashstyle, title=src/nome_project/package.xml] 
+        <?xml version="1.0"?>
+            <package format="2">
+              <name>nome_project</name>
+              <version>0.0.0</version>
+              <description>The nome_project package</description>
+            
+              <!-- One maintainer tag required, multiple allowed, one person per tag -->
+              <!-- Example:  -->
+              <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
+              <maintainer email="marcos@todo.todo">marcos</maintainer>
+            
+            
+              <!-- One license tag required, multiple allowed, one license per tag -->
+              <!-- Commonly used license strings: -->
+              <!--   BSD, MIT, Boost Software License, GPLv2, GPLv3, LGPLv2.1, LGPLv3 -->
+              <license>TODO</license>
+            
+            
+              <!-- Url tags are optional, but multiple are allowed, one per tag -->
+              <!-- Optional attribute type can be: website, bugtracker, or repository -->
+              <!-- Example: -->
+              <!-- <url type="website">http://wiki.ros.org/nome_project</url> -->
+            
+            
+              <!-- Author tags are optional, multiple are allowed, one per tag -->
+              <!-- Authors do not have to be maintainers, but could be -->
+              <!-- Example: -->
+              <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+            
+            
+              <!-- The *depend tags are used to specify dependencies -->
+              <!-- Dependencies can be catkin packages or system dependencies -->
+              <!-- Examples: -->
+              <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
+              <!--   <depend>roscpp</depend> -->
+              <!--   Note that this is equivalent to the following: -->
+              <!--   <build_depend>roscpp</build_depend> -->
+              <!--   <exec_depend>roscpp</exec_depend> -->
+              <!-- Use build_depend for packages you need at compile time: -->
+              <!--   <build_depend>message_generation</build_depend> -->
+              <!-- Use build_export_depend for packages you need in order to build against this package: -->
+              <!--   <build_export_depend>message_generation</build_export_depend> -->
+              <!-- Use buildtool_depend for build tool packages: -->
+              <!--   <buildtool_depend>catkin</buildtool_depend> -->
+              <!-- Use exec_depend for packages you need at runtime: -->
+              <!--   <exec_depend>message_runtime</exec_depend> -->
+              <!-- Use test_depend for packages you need only for testing: -->
+              <!--   <test_depend>gtest</test_depend> -->
+              <!-- Use doc_depend for packages you need only for building documentation: -->
+              <!--   <doc_depend>doxygen</doc_depend> -->
+              <buildtool_depend>catkin</buildtool_depend>
+              <build_depend>roscpp</build_depend>
+              <build_depend>std_msgs</build_depend>
+              <build_depend>my_project_msg</build_depend>
+              <build_export_depend>roscpp</build_export_depend>
+              <build_export_depend>std_msgs</build_export_depend>
+              <build_export_depend>my_project_msg</build_export_depend>
+              <exec_depend>roscpp</exec_depend>
+              <exec_depend>std_msgs</exec_depend>
+              <exec_depend>my_project_msg</exec_depend>
+            
+            
+              <!-- The export tag contains other, unspecified, tags -->
+              <export>
+                <!-- Other tools can request additional information be placed here -->
+            
+              </export>
+            </package>
+
+        \end{lstlisting}
+
+        \begin{lstlisting}[style=bashstyle, title=] 
+             <buildtool_depend>catkin</buildtool_depend>
+              <build_depend>roscpp</build_depend>
+              <build_depend>std_msgs</build_depend>
+              <build_depend>my_project_msg</build_depend>
+              <build_export_depend>roscpp</build_export_depend>
+              <build_export_depend>std_msgs</build_export_depend>
+              <build_export_depend>my_project_msg</build_export_depend>
+              <exec_depend>roscpp</exec_depend>
+              <exec_depend>std_msgs</exec_depend>
+              <exec_depend>my_project_msg</exec_depend>
+
+        \end{lstlisting}
+        \item configurando yml para o pkg de msgs
+        
+        \item o pkg foi reconstruindo do zero , pois o custom message não funcionava eo erro não foi localizado.
+        \begin{lstlisting}[style=cppStyle, title=src/nome\_project/src/counter.cpp]
+            #include <iostream>
+            #include "ros/ros.h"
+            #include "std_msgs/Float64.h"
+            #include "std_srvs/Empty.h"
+            #include "my_project_msg/CounterHistory.h"
+            #include "my_project_msg/CheckNumber.h"
+            
+            class Counter {
+            public:
+                Counter(ros::NodeHandle *nh) {
+                    count = 0;
+                    publish_interval = 1;
+            
+                    num_sub = nh->subscribe("/number", 10, &Counter::numberCallBack, this);
+                    history_pub = nh->advertise<my_project_msg::CounterHistory>("/history_counter", 10);
+                    timer = nh->createTimer(ros::Duration(publish_interval), &Counter::timerCallback, this);
+                    count_pub = nh->advertise<std_msgs::Float64>("/current_count", 10);
+                    check_greater_srv = nh->advertiseService("/check_greater", &Counter::checkGreaterServerCallback, this);
+                    last_count = count;
+                    cycles = 0;
+                }
+            
+                void numberCallBack(const std_msgs::Float64 &msg) {
+                    ROS_INFO("Callback chamado com valor: %f", msg.data);
+                    cycles++;
+                    last_count = count;
+                    count = count + msg.data;
+                    ROS_INFO("CONTAGEM ATUAL: %f", count);
+                }
+            
+                void timerCallback(const ros::TimerEvent &event) {
+                    ROS_INFO("Timer chamado");
+                    std_msgs::Float64 msg;
+                    msg.data = count;
+                    count_pub.publish(msg);
+            
+                    my_project_msg::CounterHistory history_msg;
+                    history_msg.current_value = count;
+                    history_msg.last_value = last_count;
+                    history_msg.cycles = cycles;
+                    history_pub.publish(history_msg);
+                }
+            
+                bool checkGreaterServerCallback(my_project_msg::CheckNumber::Request &req, my_project_msg::CheckNumber::Response &res) {
+                    if (req.number > count) {
+                        res.result = true;
+                    } else {
+                        res.result = false;
+                    }
+            
+                    ROS_WARN("verificando se o numero e maior que a contagem");
+                    return true;
+                }
+            
+            private:
+                double count;
+                double last_count;
+                double publish_interval;
+                int cycles;
+            
+                ros::Publisher count_pub;
+                ros::Subscriber num_sub;
+                ros::Publisher history_pub;
+                ros::Timer timer;
+                ros::ServiceServer check_greater_srv;
+            };
+            
+            int main(int argc, char **argv) {
+                ros::init(argc, argv, "counter_node");
+                ros::NodeHandle nh;
+                Counter counter(&nh);
+                ros::spin();
+            
+                return 0;
+            }
+            
+        \end{lstlisting}
+        \item definindo o service que vai ser usado dentro do metodo
+        \begin{lstlisting}[style=cppstyle, title=função de service no cpp] 
+            bool checkGreaterServerCallback(my_project_msg::CheckNumber::Request &req, my_project_msg::CheckNumber::Response &res) {
+                    if (req.number > count) {
+                        res.result = true;
+                    } else {
+                        res.result = false;
+                    }
+            
+                    ROS_WARN("verificando se o numero e maior que a contagem");
+                    return true;
+                }
+            
+        \end{lstlisting}
+        \item faz a requisição de number, se for maior que count retorna true, sse não retorna false.
+        \item vale lembrar que deu muito erro de tipagem da variavel do msg para a do cpp
+        \begin{lstlisting}[style=mystyle, title=terminal] 
+            rosservice list
+            rosservice  call /check_greater "number: 20.0" 
+        \end{lstlisting}
+        \item checando o service na lista 
+        \item chamando o service do codigo.
+    \end{itemize}
+
+
+
+\end{document}
+\section{}
+\begin{lstlisting}[style=mystyle, title=src/my\_project\_py/CMakeLists.txth] 
+\end{lstlisting}
+\lstinputlisting[title=aula03.html]{aulas/aula03.html}
+
