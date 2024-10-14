@@ -3,6 +3,7 @@ import rospy
 from std_msgs.msg import Float64
 from std_srvs.srv import Empty, EmptyResponse
 from my_project_msg.msg import CounterHistory
+from my_project_msg.srv import CheckNumber , CheckNumberResponse
 
 class Counter:
 
@@ -31,6 +32,7 @@ class Counter:
         self.timer_pub = rospy.Timer(rospy.Duration(self.publish_interval), self.timerCallback)
         self.reset_srv = rospy.Service('reset_counter', Empty, self.resetSrvCallback)
         self.history_pub = rospy.Publisher("/history_count", CounterHistory, queue_size = 10)
+        self.check_less__srv = rospy.Service('check_less', CheckNumber, self.checkLessSrvCallback)
         
     def numberCallback(self, msg):
         self.cycles = self.cycles + 1
@@ -54,6 +56,16 @@ class Counter:
         rospy.loginfo("resetando a contagem")
         return EmptyResponse()
 
+        
+    def checkLessSrvCallback(self, req):
+        
+        rospy.loginfo("Verificando se numero eh maior que a contagem. ")
+        res = CheckNumberResponse()
+        if(req.number < self.count):
+            res.result = True
+        else:
+            res.result = False    
+        return res
 if __name__ == '__main__':
     try:
         rospy.init_node("counter_node")
