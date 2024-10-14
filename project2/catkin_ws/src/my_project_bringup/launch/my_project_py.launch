@@ -1,0 +1,14 @@
+
+<launch>
+    
+    <include file = "$(find my_project_bringup)/launch/counter_py.launch">
+        <arg name ="number_topic" value = "new_number"/>
+        
+    </include>
+
+    <node name= "num_pub_py" pkg ="my_project_py" type="number_publisher.py" output ="screen"/>
+    <param name= "num"  type = "double" value = "4.5"/>
+    <param name= "pub_interval" type = "double" value= "2.5"/>
+    <param name= "reset" type= "double" value = "2"/>
+
+</launch>

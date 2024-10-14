@@ -1,0 +1,2 @@
+my_project_py
+-DCATKIN_DEVEL_PREFIX=/home/marcos/projects/ROS/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/marcos/projects/ROS/catkin_ws/install -DCATKIN_WHITELIST_PACKAGES=my_project_py -G Unix Makefiles
