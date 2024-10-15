@@ -54,14 +54,14 @@ class Counter:
     def resetSrvCallback(self, req):
         self.count = 0 
         rospy.loginfo("resetando a contagem")
-        return EmptyResponse()
+        return EmptyResponse()  
 
         
     def checkLessSrvCallback(self, req):
         
         rospy.loginfo("Verificando se numero eh maior que a contagem. ")
         res = CheckNumberResponse()
-        if(req.number < self.count):
+        if(req.number > self.count):
             res.result = True
         else:
             res.result = False    

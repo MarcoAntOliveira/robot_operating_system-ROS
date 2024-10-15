@@ -1,8 +1,8 @@
-# Install script for directory: /home/marcos/projects/ROS/catkin_ws/src/my_project_py
+# Install script for directory: /home/marcos/projects/project2/catkin_ws/src/my_project_py
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/marcos/projects/ROS/catkin_ws/install")
+  set(CMAKE_INSTALL_PREFIX "/home/marcos/projects/project2/catkin_ws/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/marcos/projects/ROS/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_py.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/marcos/projects/project2/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_py.pc")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
   file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_project_py/cmake" TYPE FILE FILES
-    "/home/marcos/projects/ROS/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_pyConfig.cmake"
-    "/home/marcos/projects/ROS/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_pyConfig-version.cmake"
+    "/home/marcos/projects/project2/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_pyConfig.cmake"
+    "/home/marcos/projects/project2/catkin_ws/build/my_project_py/catkin_generated/installspace/my_project_pyConfig-version.cmake"
     )
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_project_py" TYPE FILE FILES "/home/marcos/projects/ROS/catkin_ws/src/my_project_py/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/my_project_py" TYPE FILE FILES "/home/marcos/projects/project2/catkin_ws/src/my_project_py/package.xml")
 endif()
 
