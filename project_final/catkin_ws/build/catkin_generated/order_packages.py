@@ -2,4 +2,4 @@
 source_root_dir = '/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src'
 whitelisted_packages = ''.split(';') if '' != '' else []
 blacklisted_packages = ''.split(';') if '' != '' else []
-underlay_workspaces = '/opt/ros/noetic'.split(';') if '/opt/ros/noetic' != '' else []
+underlay_workspaces = '/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/devel;/opt/ros/noetic'.split(';') if '/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/devel;/opt/ros/noetic' != '' else []
