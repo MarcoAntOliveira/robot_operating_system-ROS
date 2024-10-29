@@ -4,5 +4,5 @@ PROJECT_PKG_CONFIG_INCLUDE_DIRS = "".split(';') if "" != "" else []
 PROJECT_CATKIN_DEPENDS = "".replace(';', ' ')
 PKG_CONFIG_LIBRARIES_WITH_PREFIX = "".split(';') if "" != "" else []
 PROJECT_NAME = "my_project_bringup"
-PROJECT_SPACE_DIR = "/home/marcos/projects/project2/catkin_ws/devel"
+PROJECT_SPACE_DIR = "/home/marcos/projects/ROS/robot_operating_system-ROS/project2/catkin_ws/devel"
 PROJECT_VERSION = "0.0.0"

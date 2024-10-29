@@ -1,0 +1,10 @@
+<launch>
+  <!-- Definir o caminho do arquivo .world -->
+  <arg name="world_file" default="$(find my_simualtions)/world/simple.world"/>
+
+  <!-- Iniciar o servidor Gazebo com o arquivo .world -->
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" args="-s libgazebo_ros_factory.so $(arg world_file)" output="screen" />
+
+  <!-- Iniciar o cliente Gazebo para a interface gráfica -->
+  <node name="gazebo_client" pkg="gazebo_ros" type="gzclient" output="screen" />
+</launch>

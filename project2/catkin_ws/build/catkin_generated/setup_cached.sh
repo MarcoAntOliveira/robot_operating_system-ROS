@@ -7,4 +7,5 @@
 # new environment variables
 
 # modified environment variables
-export PWD='/home/marcos/projects/project2/catkin_ws/build'
+export PWD='/home/marcos/projects/ROS/robot_operating_system-ROS/project2/catkin_ws/build'
+export ROS_PACKAGE_PATH='/home/marcos/projects/ROS/catkin_ws/src:/home/marcos/projects/project2/catkin_ws/src:/home/marcos/projects/ROS/catkin_ws/src:/home/marcos/projects/project2/catkin_ws/src:/home/marcos/projects/ROS/robot_operating_system-ROS/project2/catkin_ws/src:/opt/ros/noetic/share'

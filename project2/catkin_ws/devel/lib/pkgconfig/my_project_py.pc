@@ -1,4 +1,4 @@
-prefix=/home/marcos/projects/project2/catkin_ws/devel
+prefix=/home/marcos/projects/ROS/robot_operating_system-ROS/project2/catkin_ws/devel
 
 Name: my_project_py
 Description: Description of my_project_py

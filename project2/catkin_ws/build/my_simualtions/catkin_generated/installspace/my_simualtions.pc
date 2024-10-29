@@ -1,0 +1,8 @@
+prefix=/home/marcos/projects/ROS/robot_operating_system-ROS/project2/catkin_ws/install
+
+Name: my_simualtions
+Description: Description of my_simualtions
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
