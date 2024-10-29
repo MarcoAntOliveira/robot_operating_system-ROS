@@ -54,14 +54,12 @@ CMAKE_BINARY_DIR = /home/marcos/projects/ROS/robot_operating_system-ROS/project_
 
 # The main recursive "all" target.
 all: gtest/all
-all: my_project_bringup_turtle/all
 all: cpp_turtle/all
 
 .PHONY : all
 
 # The main recursive "preinstall" target.
 preinstall: gtest/preinstall
-preinstall: my_project_bringup_turtle/preinstall
 preinstall: cpp_turtle/preinstall
 
 .PHONY : preinstall
@@ -73,7 +71,6 @@ clean: CMakeFiles/clean_test_results.dir/clean
 clean: CMakeFiles/tests.dir/clean
 clean: CMakeFiles/download_extra_data.dir/clean
 clean: gtest/clean
-clean: my_project_bringup_turtle/clean
 clean: cpp_turtle/clean
 
 .PHONY : clean
@@ -167,24 +164,6 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest_main.dir/clean
 gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest.dir/clean
 
 .PHONY : gtest/googletest/clean
-
-#=============================================================================
-# Directory level rules for directory my_project_bringup_turtle
-
-# Recursive "all" directory target.
-my_project_bringup_turtle/all:
-
-.PHONY : my_project_bringup_turtle/all
-
-# Recursive "preinstall" directory target.
-my_project_bringup_turtle/preinstall:
-
-.PHONY : my_project_bringup_turtle/preinstall
-
-# Recursive "clean" directory target.
-my_project_bringup_turtle/clean: my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/clean
-
-.PHONY : my_project_bringup_turtle/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -429,33 +408,6 @@ gtest: gtest/googletest/CMakeFiles/gtest.dir/rule
 gtest/googletest/CMakeFiles/gtest.dir/clean:
 	$(MAKE) -f gtest/googletest/CMakeFiles/gtest.dir/build.make gtest/googletest/CMakeFiles/gtest.dir/clean
 .PHONY : gtest/googletest/CMakeFiles/gtest.dir/clean
-
-#=============================================================================
-# Target rules for target my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir
-
-# All Build rule for target.
-my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/all:
-	$(MAKE) -f my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/depend
-	$(MAKE) -f my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/CMakeFiles --progress-num= "Built target _catkin_empty_exported_target"
-.PHONY : my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/all
-
-# Build rule for subdir invocation for target.
-my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/CMakeFiles 0
-	$(MAKE) -f CMakeFiles/Makefile2 my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/CMakeFiles 0
-.PHONY : my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# clean rule for target.
-my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/clean:
-	$(MAKE) -f my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/build.make my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/clean
-.PHONY : my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/clean
 
 #=============================================================================
 # Target rules for target cpp_turtle/CMakeFiles/std_msgs_generate_messages_py.dir

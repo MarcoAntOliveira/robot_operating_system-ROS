@@ -1,2 +1,2 @@
-cpp_turtle:my_project_bringup_turtle
--DCATKIN_DEVEL_PREFIX=/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/install -G Unix Makefiles
+cpp_turtle
+-DCATKIN_DEVEL_PREFIX=/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/devel -DCMAKE_INSTALL_PREFIX=/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/install -DCATKIN_WHITELIST_PACKAGES=cpp_turtle -G Unix Makefiles

@@ -7,5 +7,4 @@
 # new environment variables
 
 # modified environment variables
-export PKG_CONFIG_PATH="/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/devel/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build'

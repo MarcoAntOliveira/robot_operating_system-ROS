@@ -207,3 +207,8 @@ add_executable (cpp_turtle src/counter.cpp)
 
 # Vincule as bibliotecas necessarias ao executavel 
 target_link_libraries (cpp_turtle ${catkin_LIBRARIES})
+
+# add_executable (cpp_turtle src/publisher.cpp)
+
+# # Vincule as bibliotecas necessarias ao executavel 
+# target_link_libraries (publisher ${catkin_LIBRARIES})

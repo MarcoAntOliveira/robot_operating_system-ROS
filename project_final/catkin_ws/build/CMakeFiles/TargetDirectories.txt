@@ -35,14 +35,6 @@
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/gtest/googletest/CMakeFiles/test.dir
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/gtest/googletest/CMakeFiles/gtest_main.dir
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/gtest/googletest/CMakeFiles/gtest.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/install/strip.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/install/local.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/install.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/list_install_components.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/rebuild_cache.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/edit_cache.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/test.dir
-/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/cpp_turtle/CMakeFiles/install/local.dir
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/cpp_turtle/CMakeFiles/rebuild_cache.dir
 /home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/build/cpp_turtle/CMakeFiles/edit_cache.dir

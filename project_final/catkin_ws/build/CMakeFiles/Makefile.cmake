@@ -15,12 +15,9 @@ set(CMAKE_MAKEFILE_DEPENDS
   "catkin_generated/order_packages.cmake"
   "cpp_turtle/catkin_generated/ordered_paths.cmake"
   "cpp_turtle/catkin_generated/package.cmake"
-  "my_project_bringup_turtle/catkin_generated/package.cmake"
   "/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src/CMakeLists.txt"
   "/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src/cpp_turtle/CMakeLists.txt"
   "/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src/cpp_turtle/package.xml"
-  "/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src/my_project_bringup_turtle/CMakeLists.txt"
-  "/home/marcos/projects/ROS/robot_operating_system-ROS/project_final/catkin_ws/src/my_project_bringup_turtle/package.xml"
   "/opt/ros/noetic/share/catkin/cmake/all.cmake"
   "/opt/ros/noetic/share/catkin/cmake/assert.cmake"
   "/opt/ros/noetic/share/catkin/cmake/atomic_configure_file.cmake"
@@ -180,7 +177,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "gtest/CMakeFiles/CMakeDirectoryInformation.cmake"
   "gtest/googlemock/CMakeFiles/CMakeDirectoryInformation.cmake"
   "gtest/googletest/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "my_project_bringup_turtle/CMakeFiles/CMakeDirectoryInformation.cmake"
   "cpp_turtle/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
@@ -195,7 +191,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "gtest/googlemock/CMakeFiles/gmock.dir/DependInfo.cmake"
   "gtest/googletest/CMakeFiles/gtest_main.dir/DependInfo.cmake"
   "gtest/googletest/CMakeFiles/gtest.dir/DependInfo.cmake"
-  "my_project_bringup_turtle/CMakeFiles/_catkin_empty_exported_target.dir/DependInfo.cmake"
   "cpp_turtle/CMakeFiles/std_msgs_generate_messages_py.dir/DependInfo.cmake"
   "cpp_turtle/CMakeFiles/std_msgs_generate_messages_nodejs.dir/DependInfo.cmake"
   "cpp_turtle/CMakeFiles/roscpp_generate_messages_cpp.dir/DependInfo.cmake"
